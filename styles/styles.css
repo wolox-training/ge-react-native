@@ -8,12 +8,13 @@ dark-grey: #111
 
 Font: Open Sans
 */
-
 body {
 	background-color: #F5C85F; /*orange*/
 	display: flex;
 	font-family: "Open Sans";
 	flex-direction: column;
+	padding: 0;
+	margin: 0;
 }
 
 .header {
@@ -25,6 +26,7 @@ body {
 	background-repeat: repeat-x;
 	background-position: bottom;
 	padding: 20px 0 40px;
+	width: 100%;
 }
 
 .header-separator {
@@ -44,30 +46,38 @@ body {
 	}
 
 	.header {
-		padding: 40px;
+		padding: 40px 0 0;
 	}
 }
 
-.perk {
-	margin: 20px 0;
-	text-align: center;
-	width: 280px;
-}
-
-.perk p {
-	color: #999;
-}
-
-.perks {
+.features {
 	align-items: center;
 	background-color: #EEE; /*light-gray*/
 	display: flex;
 	flex-direction: row;
 	flex-flow: row wrap;
 	justify-content: space-around;
+	-webkit-box-shadow: inset 0px -5px 6px 0px rgba(0,0,0,0.14);
+	-moz-box-shadow: inset 0px -5px 6px 0px rgba(0,0,0,0.14);
+	box-shadow: inset 0px -5px 6px 0px rgba(0,0,0,0.14);
+	padding: 0;
+	margin: 0;
+	width: 100%;
 } 
 
-.subscribe{
+.feature {
+	margin: 60px 0;
+	text-align: center;
+	width: 280px;
+}
+
+.feature p {
+	color: #999;
+	font-weight: bold;
+}
+
+
+.subscribe {
 	justify-content: space-around;
 	background-color: #F5C85F;
 	display:flex;
