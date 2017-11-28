@@ -32,21 +32,6 @@ h3 {
 	margin: 0px 30px;
 } 
 
-@media all and (max-width: 670px){
-	.cellphone-img {
-		display: none;
-	}
-
-	.vertical-separator{
-		display: none;
-	}
-
-	.header {
-		padding: 40px 0;
-	}
-}
-
-
 .gray-divider {
 	background-image: url("../resources/triangle.png");
 	background-repeat: repeat-x;
@@ -74,10 +59,11 @@ h3 {
 	align-items: center;
 	margin: 60px 0;
 	text-align: center;
-	width: 220px;
+	max-width: 220px;
+	width:100%;
 }
 
-.feature p {
+.highlight-gray {
 	color: #999;
 	font-weight: bold;
 }
@@ -93,15 +79,30 @@ h3 {
 	padding: 30px 0;
 }
 
-.subscribe h3 {
+.text-white {
 	color: #FFF;
 }
 
-.subscribe button {
-	width: 300px;
+.subscribe-button {
+	max-width: 300px;
+	width: 100%;
 }
 
-.subscribe input {
-	width: 400px;
+.subscribe-input {
+	max-width: 400px;
+	width: 100%;
 }
 
+@media screen and (max-width: 670px) {
+	.cellphone-img {
+		display: none;
+	}
+
+	.vertical-separator{
+		display: none;
+	}
+
+	.header {
+		padding: 40px 0;
+	}
+}
