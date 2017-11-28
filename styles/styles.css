@@ -84,11 +84,21 @@ h3 {
 }
 
 .subscribe-button {
-	max-width: 300px;
+	border: solid;
+	border-width: thin;
+	color: #FFF;
+	font-size: 20px;
+	font-weight: bold;
+	padding: 15px 30px;
+	text-align: center;
+	border-radius: 8px;
+	max-width: 200px;
 	width: 100%;
 }
 
 .subscribe-input {
+	border: 2px solid #FFF;
+	border-radius: 15px;
 	max-width: 400px;
 	width: 100%;
 }
