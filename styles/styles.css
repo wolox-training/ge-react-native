@@ -1,0 +1,30 @@
+/*
+Colors:
+
+orange: #F5C85F
+light-grey: #EEE
+gray: #999
+dark-grey: #111
+
+Font: Open Sans
+*/
+
+body {
+	font-family: "Open Sans";
+	background-color: #F5C85F; /*orange*/
+	display:flex;
+	flex-direction: column;
+}
+
+.header {
+	background-color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.perks {
+	background-color: #EEE; /*light-gray*/
+
+} 
+
