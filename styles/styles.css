@@ -4,7 +4,7 @@
   padding: 0;
 }
 
-h3 { 
+.title-small { 
   display: block;
   font-size: 1.10em;
   margin-top: 1em;
@@ -31,7 +31,9 @@ h3 {
   margin: 0px 30px;
 } 
 
-.gray-divider {
+.features::before {
+  content:"";
+  background-color: #FFF;
   background-image: url("../resources/triangle.png");
   background-repeat: repeat-x;
   background-position: bottom;
@@ -67,7 +69,6 @@ h3 {
   font-weight: bold;
 }
 
-
 .subscribe {
   justify-content: space-around;
   background-color: #F5C85F;
@@ -86,20 +87,6 @@ h3 {
   padding: 0 0 10px;
 }
 
-.subscribe-button {
-  border: solid;
-  border-width: thin;
-  color: #FFF;
-  font-size: 20px;
-  font-weight: bold;
-  padding: 15px 30px;
-  margin: 0 0 20px;
-  text-align: center;
-  border-radius: 8px;
-  max-width: 150px;
-  width: 100%;
-}
-
 .subscribe-input {
   border: 2px solid #FFF;
   border-radius: 15px;
@@ -108,6 +95,19 @@ h3 {
   height: 40px;
   text-align: center;
   font-weight: bold;
+}
+
+.subscribe-button {
+  border: 1px solid;
+  color: #FFF;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 15px 30px;
+  margin: 20px 0 20px;
+  text-align: center;
+  border-radius: 8px;
+  max-width: 150px;
+  width: 100%;
 }
 
 .subscribe-input::placeholder {
