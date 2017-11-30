@@ -48,8 +48,6 @@
   flex-direction: row;
   flex-flow: row wrap;
   justify-content: space-around;
-  -webkit-box-shadow: inset 0px -5px 6px 0px rgba(0,0,0,0.14);
-  -moz-box-shadow: inset 0px -5px 6px 0px rgba(0,0,0,0.14);
   box-shadow: inset 0px -5px 6px 0px rgba(0,0,0,0.14);
   width: 100%;
 } 
