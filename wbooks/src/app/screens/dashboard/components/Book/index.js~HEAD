@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 
 const Book = (props) => (
   <div className="book">
+<<<<<<< HEAD
     <img className="book-img" alt={props.title} src={props.image_url}/>
+=======
+    <img className="book-img" alt={props.title} src={props.imageUrl}/>
+>>>>>>> 739a6c5... added functionality to the catalog now displaying the books nicely, and also functionality to the search filters
     <h2 className="book-title">{props.title}</h2>
     <p className="book-author">{props.author}</p>
   </div>
@@ -13,7 +17,11 @@ const Book = (props) => (
 Book.propTypes = {
   title: PropTypes.string,
   author: PropTypes.string,
+<<<<<<< HEAD
   image_url: PropTypes.string
+=======
+  imageUrl: PropTypes.string
+>>>>>>> 739a6c5... added functionality to the catalog now displaying the books nicely, and also functionality to the search filters
 }
 
 export default Book;
