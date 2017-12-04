@@ -16,17 +16,10 @@ class Dashboard extends Component {
     }
     else {
       let allBooks = this.state.books;
-      let newBooks = [];
-
-      for(let i= 0; i < allBooks.length; i++) {
-        if( 
-          (!textFilter || allBooks[i].title.toLowerCase().includes(textFilter.toLowerCase()))
-          && (!dropdownFilter || allBooks[i].genre.toLowerCase().trim() === dropdownFilter.toLowerCase().trim())
-          ) {
-          newBooks.push(allBooks[i]);
-        }
-      }
-
+      let newBooks = allBooks.filter((book) => ( 
+          (!textFilter || book.title.toLowerCase().includes(textFilter.toLowerCase()))
+          && (!dropdownFilter || book.genre.toLowerCase() === dropdownFilter.toLowerCase())
+          ));
       this.setState({filteredBooks: newBooks});
     }    
   }

@@ -1,12 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Book from '../Book';
 import './style.css';
+import PropTypes from 'prop-types'; 
 
-class Catalog extends Component {
-
-  render(){
-    const bookList = this.props.books.map((book) => 
-      <Book key={"book_" + book.id} 
+const Catalog = (props) => {
+    const bookList = props.books.map((book) => 
+      <Book key={`book_${book.id}`} 
         image_url={book.image_url} 
         alt={book.title} 
         title={book.title} 
@@ -17,7 +16,16 @@ class Catalog extends Component {
         {bookList}
       </div>
       );
-  }
+  
+}
+
+Catalog.propTypes = {
+  books: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string,
+      author: PropTypes.author
+  }))
 }
 
 export default Catalog;

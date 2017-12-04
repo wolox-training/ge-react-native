@@ -1,35 +1,36 @@
 import React, {Component} from 'react';
 import './style.css';
+import * as constants from './constants';
 
 class Search extends Component {
   state = {updateFilters : this.props.updateFilters};
 
-  handleTextChange(e){
+  handleTextChange = (e) => {
     this.setState({titleFilter: e.target.value})
   }
 
-  handleSelectChange(e){
+  handleSelectChange = (e) => {
     this.setState({dropdownFilter: e.target.value});
   }
 
-  handleSubmit(e){
+  handleSubmit = (e) => {
     e.preventDefault();
    this.props.updateFilters(this.state.dropdownFilter, this.state.titleFilter); 
   }
 
   render(){
     return (
-      <form onSubmit={this.handleSubmit.bind(this)} className="search">
-        <select className="filter-dropdown" defaultValue="" onChange={this.handleSelectChange.bind(this)}>
+      <form onSubmit={this.handleSubmit } className="search">
+        <select className="filter-dropdown" defaultValue="" onChange={this.handleSelectChange}>
           <option value="">Seleccionar filtro </option>
-          <option value="short story">Short story</option>
-          <option value="Suspense">Suspense</option>
-          <option value="Thriller">Thriller</option>
-          <option value="Fiction">Fiction</option>
-          <option value="Other">Other</option>
+          <option value={constants.SHORT_STORY}>Short story</option>
+          <option value={constants.SUSPENSE}>Suspense</option>
+          <option value={constants.THRILLER}>Thriller</option>
+          <option value={constants.FICTION}>Fiction</option>
+          <option value={constants.OTHER}>Other</option>
         </select>
         <div className="filter-text">
-          <input className="text-input" type="text" placeholder="Buscar..." onChange={this.handleTextChange.bind(this)}/>
+          <input className="text-input" type="text" placeholder="Buscar..." onChange={this.handleTextChange}/>
           <input type="submit" value="" className="search-button"/>
         </div>
      </form>);
