@@ -1,0 +1,33 @@
+.book-detail {
+	display: flex;
+	flex-direction: column;
+}
+
+.book-info {
+}
+
+.book-summary {
+	display:flex;
+	flex-direction: row;
+}
+
+.book-summary-text {
+	display:flex;
+	flex-direction: column;
+}
+
+.related-book-list {
+	display:flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.book-comments {
+	display: flex;
+	flex-direction: column;
+}
+
+.comment {
+	display: flex;
+	flex-direction: column;
+}

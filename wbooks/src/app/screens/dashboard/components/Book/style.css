@@ -3,7 +3,12 @@
   flex-direction: column;
   width: 100%;
   max-width: 128px;
-  margin: 65px 35px;
+  margin: 55px 25px;
+  padding:10px;
+}
+
+.book:hover{
+  background-color: #EEE;
 }
 
 .book .book-img{

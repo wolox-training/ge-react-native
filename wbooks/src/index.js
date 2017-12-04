@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app/index';
+import App from './app';
 import './equalizer.css';
 
-ReactDOM.render(
-  <App/>,
+ReactDOM.render((
+  <App/>
+  ),
   document.getElementById('root')
 );
