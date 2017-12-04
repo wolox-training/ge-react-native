@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.13);
+}
+
+.logo{
+  width: 182px;
+  height: 42px;
+  margin: 23px 0 0 34px;
+  padding: 0 0 33px;
+}
+
+.menu {
+  margin: 0 49px 0 0;
+}
+
+.menu-item {
+  margin: 30px 0 0 30px;
+}
+
+.menu-profile-pic {
+  border: 0px solid;
+  border-radius: 20px;
+  height: 40px;
+  width: 40px;
+}
