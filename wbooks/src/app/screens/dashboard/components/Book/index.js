@@ -13,6 +13,7 @@ const Book = (props) => (
 Book.propTypes = {
   title: PropTypes.string,
   author: PropTypes.string,
+  //TODO cambiar a camelCase
   image_url: PropTypes.string
 }
 

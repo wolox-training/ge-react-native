@@ -41,10 +41,13 @@ class BookDetail extends Component {
         ,{id: 2, user: "PePE2", text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.2", date: "02/03/05"}]
     
     let commentsList = comments.map((comment) => 
-      <div className="comment" key={'comment_' + comment.id}>
-        <h2>{comment.user}</h2>
-        <h3>{comment.date}</h3>
-        <p>{comment.text}</p>
+      <div className="comment-container">
+        <img className="comments-profile-pic" alt="menu-profile-pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Duck_wings_outstretched.jpg/1200px-Duck_wings_outstretched.jpg"/>
+        <div className="comment" key={'comment_' + comment.id}>
+          <h2 className="comment-user">{comment.user}</h2>
+          <h3 className="comment-date">{comment.date}</h3>
+          <p className="comment-text">{comment.text}</p>
+        </div>
       </div>)
 
     let relatedList = relatedBooks.length > 0 ?
@@ -85,10 +88,13 @@ class BookDetail extends Component {
           }
           <div className="book-comments">
             <h1 className="comments-title">Comentarios</h1>
-            <div className="add-comment">
-              <h2>Agregar comentario</h2>
-              <input type="text"/>
-              <button>Enviar</button>
+            <div className="comment-container">
+              <img className="comments-profile-pic" alt="menu-profile-pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Duck_wings_outstretched.jpg/1200px-Duck_wings_outstretched.jpg"/>
+              <form className="add-comment">
+                <h2 className="add-comment-title">Agregar comentario</h2>
+                <input type="text" className="add-comment-input"/>
+                <button className="add-comment-submit">Enviar</button>
+              </form>
             </div>
             {commentsList}
           </div>
