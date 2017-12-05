@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import {BrowserRouter as Router, Route, Redirect, Switch} from 'react-router-dom';
 import Header from './components/Header';
 import Dashboard from './screens/dashboard';
-import BookDetail from './screens/bookDetail'
-import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import BookDetail from './screens/bookDetail';
+import NotFoundPage from './components/NotFoundPage';
 import './style.css';
 
 class App extends Component {
@@ -11,12 +12,14 @@ class App extends Component {
     <Router className="app">
       <div>
         <Header/>
-
-        <Route exact path="/" render={() => 
-            <Redirect to="/dashboard"/>
-        }/>
-        <Route path="/dashboard" component={Dashboard}/>
-        <Route path="/books/:id" component={BookDetail}/>
+        <Switch>
+          <Route exact path="/" render={() => 
+              <Redirect to="/dashboard"/>
+          }/>
+          <Route path="/dashboard" component={Dashboard}/>
+          <Route path="/books/:id" component={BookDetail}/>
+          <Route component={NotFoundPage}/>
+        </Switch>
       </div>
     </Router>
     );

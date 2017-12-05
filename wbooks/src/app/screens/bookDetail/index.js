@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import booksJson from '../../../../resources/books.json';
 import {Link} from 'react-router-dom';
 import './style.css';
+import Comments from './components/Comments';
+import NotFoundPage from '../../components/NotFoundPage';
 
 class BookDetail extends Component {
 
@@ -16,6 +18,7 @@ class BookDetail extends Component {
           return booksJson[i];
         }
       }
+      return null;
   }
 
   getRelatedBooks(book){
@@ -32,31 +35,26 @@ class BookDetail extends Component {
     window.history.back();
   }
 
+  postComment = (comment) => {
+    console.log(comment);
+    //...
+  }
+
   render(){
     let book = this.state.book;
+    if(!book){
+      return <NotFoundPage/>
+    }
     let relatedBooks = this.getRelatedBooks(book);
-    
-    let comments = [
-        {id: 1, user: "PePE", text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", date: "02/03/04"}
-        ,{id: 2, user: "PePE2", text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.2", date: "02/03/05"}]
-    
-    let commentsList = comments.map((comment) => 
-      <div className="comment-container">
-        <img className="comments-profile-pic" alt="menu-profile-pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Duck_wings_outstretched.jpg/1200px-Duck_wings_outstretched.jpg"/>
-        <div className="comment" key={'comment_' + comment.id}>
-          <h2 className="comment-user">{comment.user}</h2>
-          <h3 className="comment-date">{comment.date}</h3>
-          <p className="comment-text">{comment.text}</p>
-        </div>
-      </div>)
 
-    let relatedList = relatedBooks.length > 0 ?
-      relatedBooks.map((book) => 
+    let comments = this.state.comments;
+
+    let relatedList = relatedBooks.map((book) => 
         <div key={'related_' + book.id} className="related-book">
           <Link to={'/books/'+book.id}>
-            <img src={book.image_url} alt={book.title}></img>
+            <img src={book.imageUrl} alt={book.title} className="related-book-image"></img>
           </Link>
-        </div>) : [];
+        </div>);
 
     return(
       <div className="book-detail">
@@ -65,16 +63,20 @@ class BookDetail extends Component {
         </a>
         <div className="book-info"> 
           <div className="book-summary">
-            <img src={book.image_url} alt={book.title} className="book-detail-image"/>
-            <div className="book-summary-text"><h2>{book.title}</h2>
-              <h3>{book.author}</h3>
-              <h3>{book.year}</h3>
-              <h3>{book.genre}</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              <button>Alquilar</button>
+            <div className="book-image-container">
+              <img src={book.imageUrl} alt={book.title} className="book-detail-image"/>
+            </div>
+            <div className="book-summary-text">
+              <h2 className="title">{book.title}</h2>
+              <h3 className="author">{book.author}</h3>
+              <h3 className="year">{book.year}</h3>
+              <h3 className="genre">{book.genre}</h3>
+              <p className="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <button className="rent-button">Alquilar</button>
             </div>
           </div>
-          <hr/>
+          <hr className="hr-book-detail"/>
+
           {relatedList.length > 0 && 
           <div>
             <div className="book-related">
@@ -86,18 +88,9 @@ class BookDetail extends Component {
             <hr/>
           </div>
           }
-          <div className="book-comments">
-            <h1 className="comments-title">Comentarios</h1>
-            <div className="comment-container">
-              <img className="comments-profile-pic" alt="menu-profile-pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Duck_wings_outstretched.jpg/1200px-Duck_wings_outstretched.jpg"/>
-              <form className="add-comment">
-                <h2 className="add-comment-title">Agregar comentario</h2>
-                <input type="text" className="add-comment-input"/>
-                <button className="add-comment-submit">Enviar</button>
-              </form>
-            </div>
-            {commentsList}
-          </div>
+
+          <Comments comments={comments} postComment={this.postComment}/>
+
         </div>
       </div>
     );

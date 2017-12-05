@@ -3,6 +3,17 @@
 	flex-direction: column;
 }
 
+.back-button {
+	margin: 20px 0 20px 10px;
+	width: 43px;
+	height: 19px;
+	font-family:Roboto;
+	font-size:12px;
+	color:#4a4a4a;
+	letter-spacing:0px;
+	line-height:19px;
+}
+
 .book-info {
 }
 
@@ -11,13 +22,25 @@
 	flex-direction: row;
 }
 
+.book-image-container{	
+	max-width: 191px;
+	height: 272px;
+	width: 100%;
+}
+
+.book-detail-image {
+	max-width: 191px;
+	max-height: 272px;
+	margin: 0 21px 0 auto;
+}
+
 .book-summary-text {
 	display:flex;
 	flex-direction: column;
 }
 
 .book-summary-text .title {
-	font-family:Roboto-Bold;
+	font-family:Roboto;
 	font-size:20px;
 	color:#000000;
 	letter-spacing:0px;
@@ -28,7 +51,7 @@
 }
 
 .book-summary-text .author, .year, .genre {
-	font-family:Roboto-Regular;
+	font-family:Roboto;
 	font-size:16px;
 	color:#4a4a4a;
 	letter-spacing:0px;
@@ -59,21 +82,21 @@
 	background:#00adee;
 	width:192px;
 	height:38px;
-	font-family:Roboto-Bold;
+	font-family:Roboto;
 	font-size:20px;
 	color:#ffffff;
 	font-weight: bold;
 }
 
 .book-summary-text p {
-	font-family:Roboto-Regular;
+	font-family:Roboto;
 	font-size:14px;
 	color:#999999;
 	line-height:19px;
 }
 
 .related-title, .comments-title {
-	font-family:Roboto-Bold;
+	font-family:Roboto;
 	font-size:20px;
 	color:#a5cd39;
 	line-height:19px;
@@ -84,95 +107,30 @@
 .related-book-list {
 	display:flex;
 	flex-direction: row;
+<<<<<<< 4bdbed815253cc1f4dde6015d9e697c0c0d8b7c0
 	justify-content: space-between;
+=======
+	justify-content: flex-start; 
+	height: 221px;
 }
 
-.book-comments {
-	display: flex;
-	flex-direction: column;
-	margin: 0 0 50px;
+.related-book {
+	width: 100%;
+	height: 100%;
+	max-width: 87px;
+	max-height: 124px;
+	margin: 16px 27px 0;
 }
 
-.comments-title {
-	align-self: flex-start;
-	margin: 40px 0 22px;
+.related-book:hover{
+  background-color: #EEE;
 }
 
-.comment {
-	display: flex;
-	flex-direction: column;
+.related-book-list {
 }
 
-.comment-container {
-	display: flex;
-	flex-direction: row;
-	margin: 20px 0 0;
-}
-
-.comments-profile-pic {
-  border: 0px solid;
-  border-radius: 20px;
-  height: 40px;
-  width: 40px;
-  margin: 0 16px 0 22px;
-}
-
-
-.add-comment {
-	display: flex;
-	flex-direction: column;
-	text-align: left;
-}
-
-.add-comment-title {
-	font-family:Roboto-Bold;
-	font-size:14px;
-	color:#000000;
-	letter-spacing:0px;
-	line-height:19px;
-	font-weight: bold;
-	margin: 0 0 15px;
-}
-
-.add-comment-input {
-	width: 667px;
-	height: 75px;	
-	border:1px solid #979797;
-}
-
-.add-comment-submit {
-	background:#a5cd39;
-	width:192px;
-	height:38px;
-	margin: 15px 0 25px;
-	font-family:Roboto-Bold;
-	font-size:16px;
-	color:#ffffff;
-	font-weight: bold;
-}
-
-.comment-user {
-	font-family:Roboto-Bold;
-	font-size:14px;
-	color:#000000;
-	letter-spacing:0px;
-	line-height:19px;
-	font-weight: bold;
-	margin: 0 0 10px;
-}
-
-.comment-date {
-	font-family:Roboto-Bold;
-	font-size:14px;
-	color:#000000;
-	letter-spacing:0px;
-	line-height:19px;
-	margin: 0 0 11px;
-}
-
-.comment-text {
-	font-family:Roboto-Regular;
-	font-size:14px;
-	color:#999999;
-	line-height:19px;
+.related-book-image {
+	width: 100%;
+	height: 100%;
+>>>>>>> fixed the Roboto font so now it is actually used, added 404 page for invalid urls or book ids, moved the comments section of book details to a new component,  and added some mocked comment functionality
 }

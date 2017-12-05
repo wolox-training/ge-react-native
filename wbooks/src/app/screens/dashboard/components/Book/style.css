@@ -16,7 +16,7 @@
 }
 
 .book .book-title {
-  font-family:Roboto-Bold;
+  font-family:Roboto;
   font-weight: bold;
   color:#000000;
   letter-spacing:0px;
@@ -26,7 +26,7 @@
 }
 
 .book .book-author {
-  font-family:Roboto-Regular;
+  font-family:Roboto;
   font-size:12px;
   color:#4a4a4a;
   letter-spacing:0px;
