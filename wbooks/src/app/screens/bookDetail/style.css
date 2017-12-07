@@ -15,9 +15,12 @@
 }
 
 .book-info {
+	width: 60%;
+	margin: auto;
 }
 
 .book-summary {
+	margin: 0 0 36px;
 	display:flex;
 	flex-direction: row;
 }
@@ -34,7 +37,9 @@
 	margin: 0 21px 0 auto;
 }
 
+
 .book-summary-text {
+	position: relative;
 	display:flex;
 	flex-direction: column;
 }

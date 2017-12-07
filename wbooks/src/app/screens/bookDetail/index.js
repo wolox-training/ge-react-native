@@ -9,7 +9,8 @@ class BookDetail extends Component {
 
   constructor({match}){
     super();
-    this.state = {book: this.getBookInfo(match.params.id)};
+    this.state = {book: this.getBookInfo(match.params.id),
+      comments: []};
   }
 
   getBookInfo(bookId){
