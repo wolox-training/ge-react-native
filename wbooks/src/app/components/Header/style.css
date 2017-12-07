@@ -26,3 +26,30 @@
   height: 40px;
   width: 40px;
 }
+.menu-dropdown {
+  display:flex;
+  flex-direction: column;
+  background-color: #FFF;
+  width: 160px;
+  z-index: 1;
+  position: absolute;
+  box-shadow: -1px 3px 23px 0px rgba(0,0,0,0.75);
+}
+
+.menu-hidden {
+  display: none;
+}
+
+.dropdown-item {
+  height: 31px;
+  padding: 6px 12px;
+  font-family: Roboto, Arial;
+}
+
+.dropdown-item:hover {
+  background:rgba(0,173,238,0.25);
+}
+
+.menu-trigger {
+  
+} 

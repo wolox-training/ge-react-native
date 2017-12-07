@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Dashboard from './screens/dashboard';
 import BookDetail from './screens/bookDetail';
 import NotFoundPage from './components/NotFoundPage';
+import Login from './screens/login';
 import './style.css';
 
 class App extends Component {
@@ -11,13 +12,15 @@ class App extends Component {
     return (
     <Router className="app">
       <div>
+
         <Header/>
         <Switch>
           <Route exact path="/" render={() => 
               <Redirect to="/dashboard"/>
           }/>
-          <Route path="/dashboard" component={Dashboard}/>
-          <Route path="/books/:id" component={BookDetail}/>
+          <PrivateRoute path="/dashboard" component={Dashboard}/>
+          <PrivateRoute path="/books/:id" component={BookDetail}/>
+          <Route path="/login" component={Login}/>
           <Route component={NotFoundPage}/>
         </Switch>
       </div>
@@ -25,4 +28,16 @@ class App extends Component {
     );
   }
 }
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    localStorage.getItem('isLoggedIn') ? (
+      <Component {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
 export default App;
