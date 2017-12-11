@@ -18,35 +18,62 @@ const Header = () =>(
   );
 
 class Menu extends React.Component{
-  state = {showMenu: false, isLoggedIn: localStorage.getItem('isLoggedIn')};
-  handleOpenMenu = (e) => {
-    if(!this.state.showMenu)
-      this.setState({showMenu:true});
+  state = {showProfileDropdown: false, isLoggedIn: localStorage.getItem('isLoggedIn')};
+
+  triggerProfileDropdown = (e) => {
+    if(!this.state.showProfileDropdown)
+      this.setState({showProfileDropdown:true});
     else
-      this.setState({showMenu:false});
+      this.setState({showProfileDropdown:false});
+  }
+
+  triggerNotificationsDropdown = (e) => {
+    if(!this.state.showProfileDropdown)
+      this.setState({showNotificationsDropdown:true});
+    else
+      this.setState({showNotificationsDropdown:false});    
   }
 
   handleLogout = (e) => {
     localStorage.removeItem('isLoggedIn');
-    this.setState()
   }
 
+  //TODO:: hide dropdown when clicking anywhere else on the screen
   render(){
     return(
       <div>
         <div className="menu">
-          <img className="menu-item" alt="notification_img" src={notification_img}/>
+
+          <img className="menu-item" alt="notification_img" src={notification_img} onClick={this.triggerNotificationsDropdown}/>
+
+          <div className="profile-dropdown">
+            {this.state.showNotificationsDropdown && 
+            <div className="menu-dropdown">
+              <Link to="/" className="dropdown-item">
+                <span className="dropdown-text">Perfil</span>
+              </Link>
+              <Link to="/login" className="dropdown-item" onClick={this.handleLogout}>
+                <span className="dropdown-text">Cerrar sesi&oacute;n</span>
+              </Link>
+            </div>
+            }
+          </div>
+
           <img className="menu-item" alt="add_book_img" src={add_book_img}/>
-             <img className="menu-item menu-profile-pic" alt="menu-profile-pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Duck_wings_outstretched.jpg/1200px-Duck_wings_outstretched.jpg" onClick={this.handleOpenMenu}/>
-           <div className="menu-trigger">
-             {this.state.showMenu && <div className="menu-dropdown">
-               <span className="dropdown-item">Perfil</span>
-               <Link to="/login" className="dropdown-item" onClick={this.handleLogout}>
-                <span >Cerrar sesi&oacute;n</span>
-               </Link>
-             </div>
-              }
-           </div>
+
+          <img className="menu-item menu-profile-pic" alt="menu-profile-pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Duck_wings_outstretched.jpg/1200px-Duck_wings_outstretched.jpg" onClick={this.triggerProfileDropdown}/>
+          <div className="profile-dropdown">
+            {this.state.showProfileDropdown && 
+            <div className="menu-dropdown">
+              <Link to="/" className="dropdown-item">
+                <span className="dropdown-text">Perfil</span>
+              </Link>
+              <Link to="/login" className="dropdown-item" onClick={this.handleLogout}>
+                <span className="dropdown-text">Cerrar sesi&oacute;n</span>
+              </Link>
+            </div>
+            }
+          </div>
         </div>
       </div>
       );

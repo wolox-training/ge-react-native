@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
-import axios from 'axios';
+import * as authService from '../../../services/authService';
 import './style.css';
 
-const BOOKS_URL = 'https://wbooks-api-stage.herokuapp.com/api/v1/';
 
 class Login extends React.Component {
   state = {
@@ -14,26 +13,13 @@ class Login extends React.Component {
   }
 
 
+
   login = (e) => {
     e.preventDefault();
-    this.setState({authError: false}); 
-    let setState = (state) => {this.setState(state)};
-    setState = setState.bind(this);
+    this.setState({authError: false});
+
     if(!this.state.mailError && !this.state.passLengthError){
-      axios.post(`${BOOKS_URL}/users/sessions`, {
-        email: this.state.mail,
-        password: this.state.pass
-      })
-      .then(function (response) {
-        console.log(response);
-        localStorage.setItem('accessToken', response.data.access_token);
-        localStorage.setItem('isLoggedIn', true);
-        setState({redirectToReferrer: true })
-      })
-      .catch(function (error) {
-        console.log(error);
-        setState({ authError: true });
-      });
+      authService.login(this.onLoginSuccess, this.onLoginError);
     }
   }
 
@@ -50,11 +36,23 @@ class Login extends React.Component {
     this.setState({mail: e.target.value});
   }
 
+  onLoginSuccess = (response) => {
+    console.log(response);
+    localStorage.setItem('accessToken', response.data.access_token);
+    localStorage.setItem('isLoggedIn', true);
+    this.setState({redirectToReferrer: true })
+  }
+
+  onLoginError = (error) =>{
+    console.log(error);
+    this.setState({ authError: true });
+  }
+
   handlePassChange = (e) => {
     this.setState({pass: e.target.value});
   }
 
-  handleMailBlur = (e) => {    
+  handleMailBlur = (e) => {
     if(!this.validateEmail(e.target.value))
       this.setState({mailError: true});
     else{
@@ -66,13 +64,13 @@ class Login extends React.Component {
     if(!this.validatePass(e.target.value))
       this.setState({passLengthError: true});
     else
-      this.setState({passLengthError: false});    
+      this.setState({passLengthError: false});
   }
 
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/' } }
     const { redirectToReferrer } = this.state
-    
+
     if(localStorage.getItem('isLoggedIn')){
       return (
         <Redirect to={from}/>
@@ -96,7 +94,7 @@ class Login extends React.Component {
           </label>
           <label className="login-label">
             Password
-            <input type="password" className="login-pass" onBlur={this.handlePassBlur} onChange={this.handlePassChange} required/>
+            <input type="password" className="login-pass" onBlur={this.handlePassBlur} onKeyPress={this.handleKeyPress} onChange={this.handlePassChange} required/>
           </label>
           <button onClick={this.login} className="login-button">Log in</button>
           {this.state.mailError && <p className="login-error">invalid email</p>}
