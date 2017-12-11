@@ -15,7 +15,7 @@ class Comments extends Component {
     const commentsList = this.props.comments.map((comment) =>
       <div className="comment-container" key={`comment_${comment.id}`}>
         <img className="comments-profile-pic" alt="menu-profile-pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Duck_wings_outstretched.jpg/1200px-Duck_wings_outstretched.jpg"/>
-        <div className="comment" key={'comment_' + comment.id}>
+        <div className="comment">
           <h2 className="comment-user">{comment.user}</h2>
           <h3 className="comment-date">{comment.date}</h3>
           <p className="comment-text">{comment.text}</p>

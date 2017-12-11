@@ -13,11 +13,11 @@ class BookDetail extends Component {
     comments: [{id: 1, user: 'PERPE', date: '20/43', text:'safamdkfmksgdkj g kjf kjfk jfkj fkjkdjfjksperoowo opwporo owpkr eokr o'},{id: 2, user: 'PERPE', date: '20/43', text:'safamdkfmksgdkj g kjf kjfk jfkj fkjkdjfjksperoowo opwporo owpkr eokr 2'}]};
 
   componentWillMount(){
-    this.setState({book: this.getBookInfo(this.props.match.params.id)});
+    this.setState({book: this.getBookInfo(parseInt(this.props.match.params.id, 10))});
   }
 
   getBookInfo(bookId){
-      return booksJson.find((book) => book.id == bookId);
+      return booksJson.find((book) => book.id === bookId);
   }
 
   getRelatedBooks(book){
