@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import './style.css';
 
 class Comments extends Component {
+  state = {comment: ""};
 
-  constructor(props){
-    super();
-    this.state = {comment: ""};
-  }
   submitComment = (e) => {
     e.preventDefault();
     this.props.postComment(this.state.comment);
@@ -15,7 +12,7 @@ class Comments extends Component {
   handleChange = (e) => this.setState({comment: e.target.value});
 
   render(){
-    const commentsList = this.props.comments.map((comment) => 
+    const commentsList = this.props.comments.map((comment) =>
       <div className="comment-container" key={`comment_${comment.id}`}>
         <img className="comments-profile-pic" alt="menu-profile-pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Duck_wings_outstretched.jpg/1200px-Duck_wings_outstretched.jpg"/>
         <div className="comment" key={'comment_' + comment.id}>
@@ -47,7 +44,7 @@ Comments.propTypes = {
     id: PropTypes.number,
     user: PropTypes.string,
     date: PropTypes.date,
-    text: PropTypes.text    
+    text: PropTypes.text
   }))
 }
 

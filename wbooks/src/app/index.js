@@ -5,6 +5,7 @@ import Dashboard from './screens/dashboard';
 import BookDetail from './screens/bookDetail';
 import NotFoundPage from './components/NotFoundPage';
 import './style.css';
+import { ROOT, DASHBOARD, BOOKS } from '../config/routes';
 
 class App extends Component {
   render() {
@@ -13,11 +14,11 @@ class App extends Component {
       <div>
         <Header/>
         <Switch>
-          <Route exact path="/" render={() => 
-              <Redirect to="/dashboard"/>
+          <Route exact path={ROOT} render={() =>
+              <Redirect to={DASHBOARD}/>
           }/>
-          <Route path="/dashboard" component={Dashboard}/>
-          <Route path="/books/:id" component={BookDetail}/>
+        <Route path={DASHBOARD} component={Dashboard}/>
+          <Route path={`${BOOKS}/:id`} component={BookDetail}/>
           <Route component={NotFoundPage}/>
         </Switch>
       </div>
