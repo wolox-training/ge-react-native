@@ -45,7 +45,7 @@ Comments.propTypes = {
     user: PropTypes.string,
     date: PropTypes.date,
     text: PropTypes.text
-  }))
+  })).isRequired
 }
 
 export default Comments;

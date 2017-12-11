@@ -10,7 +10,7 @@ import { DASHBOARD, BOOKS } from '../../../config/routes';
 class BookDetail extends Component {
 
   state = {book: null,
-    comments: []};
+    comments: [{id: 1, user: 'PERPE', date: '20/43', text:'safamdkfmksgdkj g kjf kjfk jfkj fkjkdjfjksperoowo opwporo owpkr eokr o'},{id: 2, user: 'PERPE', date: '20/43', text:'safamdkfmksgdkj g kjf kjfk jfkj fkjkdjfjksperoowo opwporo owpkr eokr 2'}]};
 
   componentWillMount(){
     this.setState({book: this.getBookInfo(this.props.match.params.id)});
@@ -69,7 +69,7 @@ class BookDetail extends Component {
           {relatedList.length > 0 &&
           <div>
             <div className="book-related">
-              <h1>Sugerencias</h1>
+              <h1 className="related-title">Sugerencias</h1>
               <div className="related-book-list">
                 {relatedList}
               </div>
