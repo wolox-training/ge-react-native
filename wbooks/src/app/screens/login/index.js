@@ -19,7 +19,7 @@ class Login extends React.Component {
     this.setState({authError: false});
 
     if(!this.state.mailError && !this.state.passLengthError){
-      authService.login(this.onLoginSuccess, this.onLoginError);
+      authService.login({mail: this.state.mail, pass: this.state.pass}, this.onLoginSuccess, this.onLoginError);
     }
   }
 

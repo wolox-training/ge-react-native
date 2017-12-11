@@ -57,3 +57,15 @@
   z-index: 1;
   position: absolute;
 }
+
+.notification-container{
+  display:flex;
+  flex-direction: row;
+  background-color: #FFF;
+  box-shadow: -1px 3px 23px 0px rgba(0,0,0,0.75);
+}
+
+.notification-sub-container {
+  display:flex;
+  flex-direction: column;
+}

@@ -1,11 +1,11 @@
-import api from '../config/api';
+import * as api from '../config/api';
 
 
-export const login = (onLoginSuccess, onLoginError) => {
+export const login = (payload, onLoginSuccess, onLoginFailure) => {
   api.post('/users/sessions', {
-    email: this.state.mail,
-    password: this.state.pass
+    email: payload.mail,
+    password: payload.pass
   })
-    .then(this.onLoginSuccess)
-    .catch(this.onLoginError);
+    .then(onLoginSuccess)
+    .catch(onLoginFailure);
   }

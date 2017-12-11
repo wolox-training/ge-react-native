@@ -6,6 +6,7 @@ import BookDetail from './screens/bookDetail';
 import NotFoundPage from './components/NotFoundPage';
 import Login from './screens/login';
 import './style.css';
+import {ROOT, DASHBOARD, BOOKS, LOGIN} from '../config/routes';
 
 class App extends Component {
   render() {
@@ -15,12 +16,12 @@ class App extends Component {
 
         <Header/>
         <Switch>
-          <Route exact path="/" render={() => 
-              <Redirect to="/dashboard"/>
+          <Route exact path={ROOT} render={() =>
+              <Redirect to={DASHBOARD}/>
           }/>
-          <PrivateRoute path="/dashboard" component={Dashboard}/>
-          <PrivateRoute path="/books/:id" component={BookDetail}/>
-          <Route path="/login" component={Login}/>
+        <PrivateRoute path={DASHBOARD} component={Dashboard}/>
+          <PrivateRoute path={BOOKS} component={BookDetail}/>
+          <Route path={LOGIN} component={Login}/>
           <Route component={NotFoundPage}/>
         </Switch>
       </div>
