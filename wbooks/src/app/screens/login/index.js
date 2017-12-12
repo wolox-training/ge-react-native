@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Redirect} from 'react-router-dom';
 import * as authService from '../../../services/authService';
+import { ROOT } from '../../../config/routes';
 import './style.css';
 
 
@@ -11,8 +12,6 @@ class Login extends React.Component {
     passLengthError: false,
     authError: false
   }
-
-
 
   login = (e) => {
     e.preventDefault();
@@ -37,14 +36,12 @@ class Login extends React.Component {
   }
 
   onLoginSuccess = (response) => {
-    console.log(response);
     localStorage.setItem('accessToken', response.data.access_token);
     localStorage.setItem('isLoggedIn', true);
     this.setState({redirectToReferrer: true })
   }
 
   onLoginError = (error) =>{
-    console.log(error);
     this.setState({ authError: true });
   }
 
@@ -68,16 +65,10 @@ class Login extends React.Component {
   }
 
   render() {
-    const { from } = this.props.location.state || { from: { pathname: '/' } }
+    const { from } = this.props.location.state || { from: { pathname: ROOT } }
     const { redirectToReferrer } = this.state
 
-    if(localStorage.getItem('isLoggedIn')){
-      return (
-        <Redirect to={from}/>
-        )
-    }
-
-    if (redirectToReferrer) {
+    if (redirectToReferrer || localStorage.getItem('isLoggedIn')) {
       return (
         <Redirect to={from}/>
       )

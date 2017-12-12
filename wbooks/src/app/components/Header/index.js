@@ -3,6 +3,7 @@ import logo from '../../../../resources/ASSETS/wbooks_logo.svg';
 import {Link, Redirect} from 'react-router-dom';
 import notification_img from '../../../../resources/ASSETS/notifications.svg';
 import add_book_img from '../../../../resources/ASSETS/add_book.svg';
+import { LOGIN, ROOT } from '../../../config/routes';
 import './style.css';
 
 
@@ -49,7 +50,7 @@ class Menu extends React.Component{
 
   handleLogout = (e) => {
     localStorage.removeItem('isLoggedIn');
-    //TODO:: borrar token
+    localStorage.removeItem('accessToken');
     this.setState({showProfileDropdown: false, isLoggedIn: false});
   }
 
@@ -62,10 +63,12 @@ class Menu extends React.Component{
 
           <img className="menu-item" alt="notification_img" src={notification_img} onClick={this.triggerNotificationsDropdown}/>
 
-          <div className="profile-dropdown" tabIndex="0" onBlur={this.closeNotificationsDropdown} ref={(dropdownMenu) => { this.notificationsDropdownMenu = dropdownMenu; }}>
+          <div className="notification-dropdown" tabIndex="0" onBlur={this.closeNotificationsDropdown} ref={(dropdownMenu) => { this.notificationsDropdownMenu = dropdownMenu; }}>
             {this.state.showNotificationsDropdown &&
             <div className="notification-container">
-              <div className="notification-img">imagen</div>
+              <div className="notification-img-container">
+                <img className="notification-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Duck_wings_outstretched.jpg/1200px-Duck_wings_outstretched.jpg" alt="book-notification"/>
+              </div>
               <div className="notification-sub-container">
                 <h2 className="notification-title">Se encuentra disponible el libro:</h2>
                 <h1 className="notification-book-title">T&iacute;tulo</h1>
@@ -81,10 +84,10 @@ class Menu extends React.Component{
           <div className="profile-dropdown" tabIndex="0" onBlur={this.closeProfileDropdown} ref={(dropdownMenu) => { this.profileDropdownMenu = dropdownMenu; }}>
             {this.state.showProfileDropdown &&
             <div className="menu-dropdown">
-              <Link to="/" className="dropdown-item">
+              <Link to={ ROOT } className="dropdown-item">
                 <span className="dropdown-text">Perfil</span>
               </Link>
-              <Link to="/login" className="dropdown-item" onMouseDown={this.handleLogout}>
+              <Link to={LOGIN} className="dropdown-item" onMouseDown={this.handleLogout}>
                 <span className="dropdown-text">Cerrar sesi&oacute;n</span>
               </Link>
             </div>
