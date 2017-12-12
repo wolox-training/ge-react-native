@@ -2,38 +2,27 @@ import React, {Component} from 'react';
 import booksJson from '../../../../resources/books.json';
 import {Link} from 'react-router-dom';
 import './style.css';
+import PropTypes from 'prop-types';
 import Comments from './components/Comments';
 import NotFoundPage from '../../components/NotFoundPage';
+import { DASHBOARD, BOOKS } from '../../../config/routes';
 
 class BookDetail extends Component {
 
-  constructor({match}){
-    super();
-    this.state = {book: this.getBookInfo(match.params.id),
-      comments: []};
+  state = {book: null,
+    comments: [{id: 1, user: 'PERPE', date: '20/43', text:'safamdkfmksgdkj g kjf kjfk jfkj fkjkdjfjksperoowo opwporo owpkr eokr o'},{id: 2, user: 'PERPE', date: '20/43', text:'safamdkfmksgdkj g kjf kjfk jfkj fkjkdjfjksperoowo opwporo owpkr eokr 2'}]};
+
+  componentWillMount(){
+    this.setState({book: this.getBookInfo(parseInt(this.props.match.params.id, 10))});
   }
 
+
   getBookInfo(bookId){
-      for(let i= 0; i < booksJson.length; i++) {
-        if(booksJson[i].id == bookId){
-          return booksJson[i];
-        }
-      }
-      return null;
+      return booksJson.find((book) => book.id === bookId);
   }
 
   getRelatedBooks(book){
-    let relatedBooks = [];
-    for(let i= 0; i < booksJson.length; i++) {  
-        if(booksJson[i].genre === book.genre && booksJson[i].id !== book.id){
-          relatedBooks.push(booksJson[i]);
-        }
-    } 
-    return relatedBooks;
-  }
-
-  handleBackButton(){
-    window.history.back();
+    return booksJson.filter((storedBook) => storedBook.genre === book.genre && storedBook.id !== book.id);
   }
 
   postComment = (comment) => {
@@ -50,19 +39,19 @@ class BookDetail extends Component {
 
     let comments = this.state.comments;
 
-    let relatedList = relatedBooks.map((book) => 
-        <div key={'related_' + book.id} className="related-book">
-          <Link to={'/books/'+book.id}>
+    let relatedList = relatedBooks.map((book) =>
+        <div key={`related_${book.id}`} className="related-book">
+          <Link to={`${BOOKS}/${book.id}`}>
             <img src={book.imageUrl} alt={book.title} className="related-book-image"></img>
           </Link>
         </div>);
 
     return(
       <div className="book-detail">
-        <a className="back-button" onClick={this.handleBackButton}>
+        <Link to={DASHBOARD} className="back-button">
           &lt; Volver
-        </a>
-        <div className="book-info"> 
+        </Link>
+        <div className="book-info">
           <div className="book-summary">
             <div className="book-image-container">
               <img src={book.imageUrl} alt={book.title} className="book-detail-image"/>
@@ -78,10 +67,10 @@ class BookDetail extends Component {
           </div>
           <hr className="hr-book-detail"/>
 
-          {relatedList.length > 0 && 
+          {relatedList.length > 0 &&
           <div>
             <div className="book-related">
-              <h1>Sugerencias</h1>
+              <h1 className="related-title">Sugerencias</h1>
               <div className="related-book-list">
                 {relatedList}
               </div>
@@ -96,6 +85,12 @@ class BookDetail extends Component {
       </div>
     );
   }
+}
+
+BookDetail.propTypes = {
+  match: PropTypes.shape({
+    id: PropTypes.number
+  })
 }
 
 export default BookDetail;

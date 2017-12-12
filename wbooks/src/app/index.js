@@ -13,14 +13,13 @@ class App extends Component {
     return (
     <Router className="app">
       <div>
-
         <Header/>
         <Switch>
           <Route exact path={ROOT} render={() =>
               <Redirect to={DASHBOARD}/>
           }/>
         <PrivateRoute path={DASHBOARD} component={Dashboard}/>
-          <PrivateRoute path={BOOKS} component={BookDetail}/>
+          <PrivateRoute path={`${BOOKS}/:id`} component={BookDetail}/>
           <Route path={LOGIN} component={Login}/>
           <Route component={NotFoundPage}/>
         </Switch>
