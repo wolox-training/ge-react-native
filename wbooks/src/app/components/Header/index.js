@@ -13,7 +13,8 @@ const Header = () =>(
       alt="logo"
       src={logo}/>
     </Link>
-    <Menu/>
+    {localStorage.getItem('isLoggedIn') &&
+    <Menu/>}
   </div>
   );
 
@@ -48,12 +49,14 @@ class Menu extends React.Component{
 
   handleLogout = (e) => {
     localStorage.removeItem('isLoggedIn');
-    this.setState({showProfileDropdown: false});
+    this.setState({showProfileDropdown: false, isLoggedIn: false});
   }
+
 
   render(){
     return(
       <div>
+        { !this.state.isLoggedIn && <Redirect to='/'/> }
         <div className="menu">
 
           <img className="menu-item" alt="notification_img" src={notification_img} onClick={this.triggerNotificationsDropdown}/>
@@ -80,7 +83,7 @@ class Menu extends React.Component{
               <Link to="/" className="dropdown-item">
                 <span className="dropdown-text">Perfil</span>
               </Link>
-              <Link to="/login" className="dropdown-item" onClick={this.handleLogout}>
+              <Link to="/login" className="dropdown-item" onMouseDown={this.handleLogout}>
                 <span className="dropdown-text">Cerrar sesi&oacute;n</span>
               </Link>
             </div>
