@@ -49,6 +49,7 @@ class Menu extends React.Component{
 
   handleLogout = (e) => {
     localStorage.removeItem('isLoggedIn');
+    //TODO:: borrar token
     this.setState({showProfileDropdown: false, isLoggedIn: false});
   }
 
