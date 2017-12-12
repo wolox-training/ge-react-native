@@ -1,23 +1,19 @@
-import React, {Component} from 'react';
+import React from 'react';
 import logo from '../../../../resources/ASSETS/wbooks_logo.svg';
 import notification_img from '../../../../resources/ASSETS/notifications.svg';
 import add_book_img from '../../../../resources/ASSETS/add_book.svg';
 import './style.css';
 
 
-class Header extends Component {
-  render(){
-    return (
-      <div className="header">
-        <img 
-        className="logo"
-        alt="logo"
-        src={logo}/>
-        <Menu/>
-      </div>
-      );
-  }
-}
+const Header = () =>(
+  <div className="header">
+    <img 
+    className="logo"
+    alt="logo"
+    src={logo}/>
+    <Menu/>
+  </div>
+  );
 
 const Menu = () => (
   <div className="menu">

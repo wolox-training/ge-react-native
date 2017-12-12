@@ -1,0 +1,137 @@
+.book-detail {
+	display: flex;
+	flex-direction: column;
+}
+
+.back-button {
+	margin: 20px 0 20px 10px;
+	width: 43px;
+	height: 19px;
+	font-family:Roboto;
+	font-size:12px;
+	color:#4a4a4a;
+	letter-spacing:0px;
+	line-height:19px;
+}
+
+.book-info {
+	width: 60%;
+	margin: auto;
+}
+
+.book-summary {
+	margin: 0 0 36px;
+	display:flex;
+	flex-direction: row;
+}
+
+.book-image-container{	
+	max-width: 191px;
+	height: 272px;
+	width: 100%;
+}
+
+.book-detail-image {
+	max-width: 191px;
+	max-height: 272px;
+	margin: 0 21px 0 auto;
+}
+
+
+.book-summary-text {
+	position: relative;
+	display:flex;
+	flex-direction: column;
+}
+
+.book-summary-text .title {
+	font-family:Roboto;
+	font-size:20px;
+	color:#000000;
+	letter-spacing:0px;
+	line-height:19px;
+	text-align:left;
+	font-weight: bold;
+	margin: 0 0 10px;
+}
+
+.book-summary-text .author, .year, .genre {
+	font-family:Roboto;
+	font-size:16px;
+	color:#4a4a4a;
+	letter-spacing:0px;
+}
+
+.hr-book-detail {
+	background-color: #66e5ff;
+	width:100%;
+	border-color: #66e5ff; 
+}
+
+.book-summary-text .author {
+	margin: 0 0 22px;
+}
+
+.book-summary-text .year {
+	margin: 0 0 8px;
+}
+
+.book-summary-text .genre {
+	margin: 0 0 13px;
+}
+
+.book-summary-text .rent-button {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background:#00adee;
+	width:192px;
+	height:38px;
+	font-family:Roboto;
+	font-size:20px;
+	color:#ffffff;
+	font-weight: bold;
+}
+
+.book-summary-text p {
+	font-family:Roboto;
+	font-size:14px;
+	color:#999999;
+	line-height:19px;
+}
+
+.related-title, .comments-title {
+	font-family:Roboto;
+	font-size:20px;
+	color:#a5cd39;
+	line-height:19px;
+	font-weight: bold;
+	margin: 31px 0 0 0;
+}
+
+.related-book-list {
+	display:flex;
+	flex-direction: row;
+	justify-content: flex-start; 
+	height: 221px;
+}
+
+.related-book {
+	width: 100%;
+	height: 100%;
+	max-width: 87px;
+	max-height: 124px;
+	margin: 16px 27px 0;
+}
+
+.related-book:hover{
+  background-color: #EEE;
+}
+
+.related-book-list {
+}
+
+.related-book-image {
+	width: 100%;
+	height: 100%;
+}
