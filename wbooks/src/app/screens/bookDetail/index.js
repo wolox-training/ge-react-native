@@ -1,28 +1,49 @@
 import React, {Component} from 'react';
-import booksJson from '../../../../resources/books.json';
 import {Link} from 'react-router-dom';
 import './style.css';
 import PropTypes from 'prop-types';
 import Comments from './components/Comments';
 import NotFoundPage from '../../components/NotFoundPage';
+import UnauthorizedPage from '../../components/UnauthorizedPage';
 import { DASHBOARD, BOOKS } from '../../../config/routes';
+import * as bookService from '../../../services/bookService';
 
 class BookDetail extends Component {
 
   state = {book: null,
-    comments: [{id: 1, user: 'PERPE', date: '20/43', text:'safamdkfmksgdkj g kjf kjfk jfkj fkjkdjfjksperoowo opwporo owpkr eokr o'},{id: 2, user: 'PERPE', date: '20/43', text:'safamdkfmksgdkj g kjf kjfk jfkj fkjkdjfjksperoowo opwporo owpkr eokr 2'}]};
+    comments: [{id: 1, user: 'PERPE', date: '20/43', text:'safamdkfmksgdkj g kjf kjfk jfkj fkjkdjfjksperoowo opwporo owpkr eokr o'},{id: 2, user: 'PERPE', date: '20/43', text:'safamdkfmksgdkj g kjf kjfk jfkj fkjkdjfjksperoowo opwporo owpkr eokr 2'}],
+    relatedBooks: []
+  };
 
   componentWillMount(){
-    this.setState({book: this.getBookInfo(parseInt(this.props.match.params.id, 10))});
+    this.getBookInfo(this.props.match.params.id);
   }
 
 
   getBookInfo(bookId){
-      return booksJson.find((book) => book.id === bookId);
+    bookService.getBook(bookId, localStorage.getItem('accessToken'), this.onGetBookSuccess, this.onGetBookFailure);
+    this.setState({loading: true});
+  }
+
+  onGetBookSuccess = (book) => {
+    this.setState({loading:false, book: book});
+    this.getRelatedBooks(book);
+  }
+
+  onGetBookFailure = (error) => {
+    if(error.response.status === 401)
+      this.setState({loading: false, autenticationError: true});
+    else
+      this.setState({loading: false, bookNotFound: true});
+
   }
 
   getRelatedBooks(book){
-    return booksJson.filter((storedBook) => storedBook.genre === book.genre && storedBook.id !== book.id);
+    bookService.getRelatedBooks(book, localStorage.getItem('accessToken'), this.onGetRelatedBooksSuccess, this.onGetBookFailure);
+  }
+
+  onGetRelatedBooksSuccess = (books) => {
+    this.setState({relatedBooks: books? books : []});
   }
 
   postComment = (comment) => {
@@ -32,17 +53,23 @@ class BookDetail extends Component {
 
   render(){
     let book = this.state.book;
-    if(!book){
+    if(this.state.autenticationError){
+      return <UnauthorizedPage/>
+    }
+    if(this.state.loading){
+      return <h1>Loading...</h1>
+    }
+    if(!book || this.state.bookNotFound){
       return <NotFoundPage/>
     }
-    let relatedBooks = this.getRelatedBooks(book);
+    let relatedBooks = this.state.relatedBooks;
 
     let comments = this.state.comments;
 
     let relatedList = relatedBooks.map((book) =>
         <div key={`related_${book.id}`} className="related-book">
           <Link to={`${BOOKS}/${book.id}`}>
-            <img src={book.imageUrl} alt={book.title} className="related-book-image"></img>
+            <img src={book.image_url} alt={book.title} className="related-book-image"></img>
           </Link>
         </div>);
 
@@ -54,7 +81,7 @@ class BookDetail extends Component {
         <div className="book-info">
           <div className="book-summary">
             <div className="book-image-container">
-              <img src={book.imageUrl} alt={book.title} className="book-detail-image"/>
+              <img src={book.image_url} alt={book.title} className="book-detail-image"/>
             </div>
             <div className="book-summary-text">
               <h2 className="title">{book.title}</h2>
