@@ -3,6 +3,7 @@ import {Redirect} from 'react-router-dom';
 import * as authService from '../../../services/authService';
 import { ROOT } from '../../../config/routes';
 import './style.css';
+import * as validations from '../../../utils/validations';
 
 
 class Login extends React.Component {
@@ -22,22 +23,11 @@ class Login extends React.Component {
     }
   }
 
-  validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-  }
-
-  validatePass(pass){
-    return pass.length >= 8;
-  }
-
   handleMailChange = (e) => {
     this.setState({mail: e.target.value});
   }
 
   onLoginSuccess = (response) => {
-    localStorage.setItem('accessToken', response.data.access_token);
-    localStorage.setItem('isLoggedIn', true);
     this.setState({redirectToReferrer: true })
   }
 
@@ -50,25 +40,18 @@ class Login extends React.Component {
   }
 
   handleMailBlur = (e) => {
-    if(!this.validateEmail(e.target.value))
-      this.setState({mailError: true});
-    else{
-      this.setState({mailError: false});
-    }
+      this.setState({mailError: !validations.validateEmail(e.target.value)});
   }
 
   handlePassBlur = (e) => {
-    if(!this.validatePass(e.target.value))
-      this.setState({passLengthError: true});
-    else
-      this.setState({passLengthError: false});
+    this.setState({passLengthError: !validations.validatePass(e.target.value)});
   }
 
   render() {
-    const { from } = this.props.location.state || { from: { pathname: ROOT } }
+    const { from } = this.props.location.state || {from: { pathname: ROOT } };
     const { redirectToReferrer } = this.state
 
-    if (redirectToReferrer || localStorage.getItem('isLoggedIn')) {
+    if (redirectToReferrer || authService.isLoggedIn()) {
       return (
         <Redirect to={from}/>
       )
@@ -76,7 +59,7 @@ class Login extends React.Component {
 
     return (
       <div className="login-page">
-        <p className="login-error">You must log in to view the page at {from.pathname}</p>
+        <p className="login-error">Debes estar logeado para visitar {from.pathname}</p>
         <p className="login-title">Login</p>
         <form className="login-form" onSubmit={this.login}>
           <label className="login-label">
@@ -88,9 +71,9 @@ class Login extends React.Component {
             <input type="password" className="login-pass" onBlur={this.handlePassBlur} onKeyPress={this.handleKeyPress} onChange={this.handlePassChange} required/>
           </label>
           <button onClick={this.login} className="login-button">Log in</button>
-          {this.state.mailError && <p className="login-error">invalid email</p>}
-          {this.state.passLengthError && <p className="login-error">password should be 8 or more characters</p>}
-          {this.state.authError && <p className="login-error">Authentication error</p>}
+          {this.state.mailError && <p className="login-error">email invalido</p>}
+          {this.state.passLengthError && <p className="login-error">la clave debe tener 8 o mas caracteres</p>}
+          {this.state.authError && <p className="login-error">error de autenticaci&oacute;n</p>}
         </form>
       </div>
     )

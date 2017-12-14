@@ -7,6 +7,7 @@ import NotFoundPage from './components/NotFoundPage';
 import Login from './screens/login';
 import './style.css';
 import {ROOT, DASHBOARD, BOOKS, LOGIN} from '../config/routes';
+import * as authService from '../services/authService';
 
 class App extends Component {
   render() {
@@ -30,7 +31,7 @@ class App extends Component {
 }
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
-    localStorage.getItem('isLoggedIn') ? (
+    authService.isLoggedIn() ? (
       <Component {...props}/>
     ) : (
       <Redirect to={{

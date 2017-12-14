@@ -1,43 +1,45 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from '../../../../resources/ASSETS/wbooks_logo.svg';
 import {Link, Redirect} from 'react-router-dom';
 import notification_img from '../../../../resources/ASSETS/notifications.svg';
 import add_book_img from '../../../../resources/ASSETS/add_book.svg';
 import { LOGIN, ROOT } from '../../../config/routes';
+import * as authService from '../../../services/authService';
 import './style.css';
 
 
 const Header = () =>(
   <div className="header">
-    <Link to='/'><img
+    <Link to={ ROOT }><img
       className="logo"
       alt="logo"
       src={logo}/>
     </Link>
-    {localStorage.getItem('isLoggedIn') &&
+    {authService.isLoggedIn() &&
     <Menu/>}
   </div>
   );
 
-class Menu extends React.Component{
-  state = {showProfileDropdown: false, isLoggedIn: localStorage.getItem('isLoggedIn')};
+class Menu extends Component {
+  state = {showProfileDropdown: false, isLoggedIn: authService.isLoggedIn()};
 
-  triggerProfileDropdown = (e) => {
-    if(!this.state.showProfileDropdown){
-      this.setState({showProfileDropdown:true});
-      this.profileDropdownMenu.focus();
-    }
-    else
-      this.setState({showProfileDropdown:false});
+  triggerProfileDropdown = () => {
+    this.setState(prevState => {
+       if(!prevState.showProfileDropdown) {
+          this.profileDropdownMenu.focus();
+       }
+       return { showProfileDropdown: !prevState.showProfileDropdown };
+      });
   }
 
-  triggerNotificationsDropdown = (e) => {
-    if(!this.state.showNotificationsDropdown){
-      this.setState({showNotificationsDropdown:true});
-      this.notificationsDropdownMenu.focus();
-    }
-    else
-      this.setState({showNotificationsDropdown:false});
+  triggerNotificationsDropdown = () => {
+    this.setState(prevState => {
+      if(!prevState.showNotificationsDropdown) {
+         this.notificationsDropdownMenu.focus();
+      }
+      return { showNotificationsDropdown: !prevState.showNotificationsDropdown };
+     });
+
   }
 
   closeProfileDropdown = () => {
@@ -48,9 +50,8 @@ class Menu extends React.Component{
     this.setState({showNotificationsDropdown: false});
   }
 
-  handleLogout = (e) => {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('accessToken');
+  handleLogout = () => {
+    authService.logout();
     this.setState({showProfileDropdown: false, isLoggedIn: false});
   }
 
@@ -58,7 +59,7 @@ class Menu extends React.Component{
   render(){
     return(
       <div>
-        { !this.state.isLoggedIn && <Redirect to='/'/> }
+        { !this.state.isLoggedIn && <Redirect to={ LOGIN }/> }
         <div className="menu">
 
           <img className="menu-item" alt="notification_img" src={notification_img} onClick={this.triggerNotificationsDropdown}/>
@@ -84,12 +85,8 @@ class Menu extends React.Component{
           <div className="profile-dropdown" tabIndex="0" onBlur={this.closeProfileDropdown} ref={(dropdownMenu) => { this.profileDropdownMenu = dropdownMenu; }}>
             {this.state.showProfileDropdown &&
             <div className="menu-dropdown">
-              <Link to={ ROOT } className="dropdown-item">
-                <span className="dropdown-text">Perfil</span>
-              </Link>
-              <Link to={LOGIN} className="dropdown-item" onMouseDown={this.handleLogout}>
-                <span className="dropdown-text">Cerrar sesi&oacute;n</span>
-              </Link>
+                <span className="dropdown-text dropdown-item">Perfil</span>
+                <span className="dropdown-text dropdown-item" onMouseDown={this.handleLogout}>Cerrar sesi&oacute;n</span>
             </div>
             }
           </div>
