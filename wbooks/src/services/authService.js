@@ -6,6 +6,16 @@ export const login = (payload, onLoginSuccess, onLoginFailure) => {
     email: payload.mail,
     password: payload.pass
   })
-    .then(onLoginSuccess)
+    .then((response) => {
+      localStorage.setItem('accessToken', response.data.access_token);
+      localStorage.setItem('isLoggedIn', true);
+      onLoginSuccess(response)})
     .catch(onLoginFailure);
   }
+
+export const isLoggedIn = () => localStorage.getItem('isLoggedIn');
+
+export const logout = () => {
+  localStorage.removeItem('isLoggedIn');
+  localStorage.removeItem('accessToken');
+}
