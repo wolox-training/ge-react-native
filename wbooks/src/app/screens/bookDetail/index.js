@@ -21,7 +21,7 @@ class BookDetail extends Component {
 
 
   getBookInfo(bookId){
-    bookService.getBook(bookId, localStorage.getItem('accessToken'), this.onGetBookSuccess, this.onGetBookFailure);
+    bookService.getBook(bookId, this.onGetBookSuccess, this.onGetBookFailure);
     this.setState({loading: true});
   }
 
@@ -39,11 +39,11 @@ class BookDetail extends Component {
   }
 
   getRelatedBooks(book){
-    bookService.getRelatedBooks(book, localStorage.getItem('accessToken'), this.onGetRelatedBooksSuccess, this.onGetBookFailure);
+    bookService.getRelatedBooks(book, this.onGetRelatedBooksSuccess, this.onGetBookFailure);
   }
 
   onGetRelatedBooksSuccess = (books) => {
-    this.setState({relatedBooks: books? books : []});
+    this.setState({ relatedBooks: books ? books : [] });
   }
 
   postComment = (comment) => {
@@ -52,21 +52,21 @@ class BookDetail extends Component {
   }
 
   render(){
-    let book = this.state.book;
+    const book = this.state.book;
     if(this.state.autenticationError){
       return <UnauthorizedPage/>
     }
     if(this.state.loading){
-      return <h1>Loading...</h1>
+      return <h1>Cargando...</h1>
     }
     if(!book || this.state.bookNotFound){
       return <NotFoundPage/>
     }
-    let relatedBooks = this.state.relatedBooks;
+    const relatedBooks = this.state.relatedBooks;
 
-    let comments = this.state.comments;
+    const comments = this.state.comments;
 
-    let relatedList = relatedBooks.map((book) =>
+    const relatedList = relatedBooks.map((book) =>
         <div key={`related_${book.id}`} className="related-book">
           <Link to={`${BOOKS}/${book.id}`}>
             <img src={book.image_url} alt={book.title} className="related-book-image"></img>

@@ -16,14 +16,13 @@ class Dashboard extends Component {
 
   getBooks = () =>{
     this.setState({loading: true});
-    bookService.getBooks(localStorage.getItem('accessToken'), this.onGetBooksSuccess, this.onGetBooksFailure);
+    bookService.getBooks(this.onGetBooksSuccess, this.onGetBooksFailure);
   }
 
   onGetBooksSuccess = (books) => {
     this.setState({loading: false, books: books, filteredBooks: books});
   }
   onGetBooksFailure = (error) => {
-    console.log(error);
     this.setState({loading: false, notAuthorized: true});
   }
 
@@ -33,8 +32,7 @@ class Dashboard extends Component {
       this.setState({filteredBooks:this.state.books});
     }
     else {
-      let allBooks = this.state.books;
-      let newBooks = allBooks.filter((book) => (
+      const newBooks = this.state.books.filter((book) => (
           (!textFilter || book.title.toLowerCase().includes(textFilter.toLowerCase()))
           && (!dropdownFilter || book.genre.toLowerCase() === dropdownFilter.toLowerCase())
           ));
@@ -44,7 +42,7 @@ class Dashboard extends Component {
 
   render(){
     if(this.state.loading)
-      return <h1>Loading...</h1>
+      return <h1>Cargando...</h1>
     if(this.state.notAuthorized)
       return <UnauthorizedPage/>
     return(
