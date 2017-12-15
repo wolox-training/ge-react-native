@@ -19,3 +19,5 @@ export const logout = () => {
   localStorage.removeItem('isLoggedIn');
   localStorage.removeItem('accessToken');
 }
+
+export const getAccessToken = () => localStorage.getItem('accessToken');

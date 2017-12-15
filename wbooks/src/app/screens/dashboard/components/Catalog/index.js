@@ -9,7 +9,7 @@ const Catalog = (props) => {
     const bookList = props.books.map((book) =>
       <Link to={`${BOOKS}/${book.id}`} key={`book_${book.id}`}>
         <Book
-        imageUrl={book.imageUrl}
+        imageUrl={book.image_url}
         alt={book.title}
         title={book.title}
         author={book.author}/>
