@@ -4,8 +4,10 @@ import Header from './components/Header';
 import Dashboard from './screens/dashboard';
 import BookDetail from './screens/bookDetail';
 import NotFoundPage from './components/NotFoundPage';
+import Login from './screens/login';
 import './style.css';
-import { ROOT, DASHBOARD, BOOKS } from '../config/routes';
+import {ROOT, DASHBOARD, BOOKS, LOGIN} from '../config/routes';
+import * as authService from '../services/authService';
 
 class App extends Component {
   render() {
@@ -17,8 +19,9 @@ class App extends Component {
           <Route exact path={ROOT} render={() =>
               <Redirect to={DASHBOARD}/>
           }/>
-        <Route path={DASHBOARD} component={Dashboard}/>
-          <Route path={`${BOOKS}/:id`} component={BookDetail}/>
+        <PrivateRoute path={DASHBOARD} component={Dashboard}/>
+          <PrivateRoute path={`${BOOKS}/:id`} component={BookDetail}/>
+          <Route path={LOGIN} component={Login}/>
           <Route component={NotFoundPage}/>
         </Switch>
       </div>
@@ -26,4 +29,16 @@ class App extends Component {
     );
   }
 }
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    authService.isLoggedIn() ? (
+      <Component {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: LOGIN,
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
 export default App;
