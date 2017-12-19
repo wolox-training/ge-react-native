@@ -1,14 +1,29 @@
 import { combineReducers } from 'redux';
 
-const filter = (state = {}, action) => {
+const initialState = {
+  genre: '',
+  title: ''
+};
+
+const filter = (state = initialState, action) => {
 	switch (action.type){
 		case 'CHANGE_FILTER':
 			return {
 				genre: action.genre,
-				text: action.text
+				title: action.title
 			}
 		default:
 			return state;
+	}
+}
+
+const auth = (state = {isLoggedIn: false}, action) => {
+	switch (action.type){
+		case 'LOGIN_SUCCESS':
+			return {
+				accessToken: action.data.accesToken,
+				isLoggedIn: true
+			}
 	}
 }
 

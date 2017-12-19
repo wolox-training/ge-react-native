@@ -4,7 +4,9 @@ import * as authService from '../../../services/authService';
 import { ROOT } from '../../../config/routes';
 import './style.css';
 import * as validations from '../../../utils/validations';
-
+import { connect } from 'react-redux'; 
+import { loginRequest } from '../../actions';
+ 
 
 class Login extends React.Component {
   state = {
@@ -19,6 +21,7 @@ class Login extends React.Component {
     this.setState({authError: false});
 
     if(!this.state.mailError && !this.state.passLengthError){
+      //this.props.login(this.state.mail, this.state.pass);
       authService.login({mail: this.state.mail, pass: this.state.pass}, this.onLoginSuccess, this.onLoginError);
     }
   }
@@ -29,7 +32,7 @@ class Login extends React.Component {
 
   onLoginSuccess = (response) => {
     this.setState({redirectToReferrer: true })
-  }
+  } 
 
   onLoginError = (error) =>{
     this.setState({ authError: true });
@@ -80,4 +83,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  login: (email, password) => {
+    dispatch(loginRequest(email, password));
+  }
+})
+
+const mapStateToProps = (store) => ({
+  isLoggedIn: store.auth.isLoggedIn
+});
+
+
+export default connect(undefined, mapDispatchToProps)(Login);

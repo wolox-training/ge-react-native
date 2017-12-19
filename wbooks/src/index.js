@@ -4,14 +4,14 @@ import App from './app';
 import './equalizer.css';
 import { createStore } from 'redux';
 import RootReducer from './app/reducers';
-import {BrowserRouter as Router} from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 const store = createStore(RootReducer);
 
-ReactDOM.render((
-  <Router className="app">
-  	<App store={store} />
-  </Router>
-  ),
+ReactDOM.render(
+  <Provider store={store}>
+  	<App />
+  </Provider>
+  ,
   document.getElementById('root')
 );

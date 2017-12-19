@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+
 import Catalog from './components/Catalog';
 import Search from './components/Search';
 import * as bookService from '../../../services/bookService';
@@ -6,10 +8,7 @@ import UnauthorizedPage from '../../components/UnauthorizedPage';
 
 class Dashboard extends Component {
   state = {
-    filteredBooks: [],
     books: [],
-    genreFilter: null,
-    textFilter: null
   };
 
   componentWillMount(){
@@ -22,32 +21,26 @@ class Dashboard extends Component {
   }
 
   onGetBooksSuccess = (books) => {
-    this.setState({loading: false, books: books, filteredBooks: books});
+    this.setState({loading: false, books: books});
   }
+
   onGetBooksFailure = (error) => {
     this.setState({loading: false, notAuthorized: true});
   }
 
   getFilteredBooks = () => {
-    const textFilter = this.state.textFilter;
-    const dropdownFilter = this.state.dropdownFilter;
-    if(!textFilter && !dropdownFilter) {
-      this.setState({filteredBooks:this.state.books});
+    const titleFilter = this.props.titleFilter;
+    const genreFilter = this.props.genreFilter;
+    if(!titleFilter && !genreFilter) {
+      return this.state.books;
     }
     else {
       const newBooks = this.state.books.filter((book) => (
-          (!textFilter || book.title.toLowerCase().includes(textFilter.toLowerCase()))
-          && (!dropdownFilter || book.genre.toLowerCase() === dropdownFilter.toLowerCase())
+          (!titleFilter || book.title.toLowerCase().includes(titleFilter.toLowerCase()))
+          && (!genreFilter || book.genre.toLowerCase() === genreFilter.toLowerCase())
           ));
-      this.setState({filteredBooks: newBooks});
+      return newBooks;
     }    
-  }
-
-  updateFilters = (genreFilter, textFilter) => {
-    this.setState({
-      genreFilter,
-      textFilter
-    });
   }
 
   render(){
@@ -55,13 +48,19 @@ class Dashboard extends Component {
       return <h1>Cargando...</h1>
     if(this.state.notAuthorized)
       return <UnauthorizedPage/>
+    const books = this.getFilteredBooks();
     return(
       <div className="dashboard">
-        <Search updateFilters={this.updateFilters}/>
-        <Catalog books={this.state.filteredBooks}/>
+        <Search/>
+        <Catalog books={books}/>
       </div>
       );
   }
 }
 
-export default Dashboard;
+const mapStateToProps = (store) => ({
+  genreFilter: store.filter.genre,
+  titleFilter: store.filter.title
+});
+
+export default connect(mapStateToProps)(Dashboard);
