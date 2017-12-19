@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { changeFilter } from '../../../../actions';
+import { actionCreators } from '../../../../actions';
 import { connect } from 'react-redux';
 import './style.css';
 import * as constants from './constants';
@@ -42,7 +42,7 @@ class Search extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit: (titleFilter, genreFilter) => {
-    dispatch(changeFilter(genreFilter, titleFilter));
+    dispatch(actionCreators.changeFilter(genreFilter, titleFilter));
   }
 })
 

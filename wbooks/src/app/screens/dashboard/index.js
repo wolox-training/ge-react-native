@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-
 import Catalog from './components/Catalog';
 import Search from './components/Search';
 import * as bookService from '../../../services/bookService';
 import UnauthorizedPage from '../../components/UnauthorizedPage';
+import { actionCreators } from '../../actions';
 
 class Dashboard extends Component {
   state = {
@@ -12,7 +12,7 @@ class Dashboard extends Component {
   };
 
   componentWillMount(){
-    this.getBooks();
+    this.props.getBooks();
   }
 
   getBooks = () =>{
@@ -60,7 +60,15 @@ class Dashboard extends Component {
 
 const mapStateToProps = (store) => ({
   genreFilter: store.filter.genre,
-  titleFilter: store.filter.title
+  titleFilter: store.filter.title,
+  booksLoading: store.filter.books
 });
 
-export default connect(mapStateToProps)(Dashboard);
+const mapDispatchToProps = (dispatch) => ({
+  getBooks: () => {
+    dispatch(actionCreators.getBooks());
+  }
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

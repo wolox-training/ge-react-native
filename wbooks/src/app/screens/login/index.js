@@ -5,7 +5,7 @@ import { ROOT } from '../../../config/routes';
 import './style.css';
 import * as validations from '../../../utils/validations';
 import { connect } from 'react-redux'; 
-import { loginRequest } from '../../actions';
+import { actionCreators } from '../../actions';
  
 
 class Login extends React.Component {
@@ -85,7 +85,7 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   login: (email, password) => {
-    dispatch(loginRequest(email, password));
+    dispatch(actionCreators.loginRequest(email, password));
   }
 })
 

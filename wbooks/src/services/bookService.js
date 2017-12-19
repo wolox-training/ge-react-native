@@ -1,10 +1,14 @@
 import * as api from '../config/api';
 
-export const getBooks = (onSuccess, onFailure) => {
-  api.get('/books')
-    .then(({data}) => {onSuccess(data)})
-    .catch(onFailure);
+export const getBooks = () => {
+  return api.get('/books');
 }
+
+// export const getBooks = (onSuccess, onFailure) => {
+//   api.get('/books')
+//     .then(({data}) => {onSuccess(data)})
+//     .catch(onFailure);
+// }
 
 export const getBook = (id, onSuccess, onFailure) => {
   api.get(`/books/${id}` )
