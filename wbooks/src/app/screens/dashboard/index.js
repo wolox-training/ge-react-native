@@ -7,7 +7,9 @@ import UnauthorizedPage from '../../components/UnauthorizedPage';
 class Dashboard extends Component {
   state = {
     filteredBooks: [],
-    books: []
+    books: [],
+    genreFilter: null,
+    textFilter: null
   };
 
   componentWillMount(){
@@ -26,8 +28,9 @@ class Dashboard extends Component {
     this.setState({loading: false, notAuthorized: true});
   }
 
-  updateFilters = (dropdownFilter, textFilter) => {
-
+  getFilteredBooks = () => {
+    const textFilter = this.state.textFilter;
+    const dropdownFilter = this.state.dropdownFilter;
     if(!textFilter && !dropdownFilter) {
       this.setState({filteredBooks:this.state.books});
     }
@@ -37,7 +40,14 @@ class Dashboard extends Component {
           && (!dropdownFilter || book.genre.toLowerCase() === dropdownFilter.toLowerCase())
           ));
       this.setState({filteredBooks: newBooks});
-    }
+    }    
+  }
+
+  updateFilters = (genreFilter, textFilter) => {
+    this.setState({
+      genreFilter,
+      textFilter
+    });
   }
 
   render(){
