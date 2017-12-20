@@ -1,28 +1,23 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
-import * as authService from '../../../services/authService';
 import { ROOT } from '../../../config/routes';
 import './style.css';
 import * as validations from '../../../utils/validations';
 import { connect } from 'react-redux'; 
-import { actionCreators } from '../../actions';
+import { actionCreators } from '../../redux';
  
 
 class Login extends React.Component {
   state = {
-    redirectToReferrer: false,
     mailError: false,
     passLengthError: false,
-    authError: false
   }
 
   login = (e) => {
     e.preventDefault();
-    this.setState({authError: false});
 
     if(!this.state.mailError && !this.state.passLengthError){
-      //this.props.login(this.state.mail, this.state.pass);
-      authService.login({mail: this.state.mail, pass: this.state.pass}, this.onLoginSuccess, this.onLoginError);
+      this.props.login(this.state.mail, this.state.pass);
     }
   }
 
@@ -30,20 +25,12 @@ class Login extends React.Component {
     this.setState({mail: e.target.value});
   }
 
-  onLoginSuccess = (response) => {
-    this.setState({redirectToReferrer: true })
-  } 
-
-  onLoginError = (error) =>{
-    this.setState({ authError: true });
-  }
-
   handlePassChange = (e) => {
     this.setState({pass: e.target.value});
   }
 
   handleMailBlur = (e) => {
-      this.setState({mailError: !validations.validateEmail(e.target.value)});
+    this.setState({mailError: !validations.validateEmail(e.target.value)});
   }
 
   handlePassBlur = (e) => {
@@ -52,9 +39,8 @@ class Login extends React.Component {
 
   render() {
     const { from } = this.props.location.state || {from: { pathname: ROOT } };
-    const { redirectToReferrer } = this.state
 
-    if (redirectToReferrer || authService.isLoggedIn()) {
+    if (this.props.isLoggedIn) {
       return (
         <Redirect to={from}/>
       )
@@ -76,7 +62,7 @@ class Login extends React.Component {
           <button onClick={this.login} className="login-button">Log in</button>
           {this.state.mailError && <p className="login-error">email invalido</p>}
           {this.state.passLengthError && <p className="login-error">la clave debe tener 8 o mas caracteres</p>}
-          {this.state.authError && <p className="login-error">error de autenticaci&oacute;n</p>}
+          {this.props.loginError && <p className="login-error">error de autenticaci&oacute;n</p>}
         </form>
       </div>
     )
@@ -85,13 +71,14 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   login: (email, password) => {
-    dispatch(actionCreators.loginRequest(email, password));
+    dispatch(actionCreators.login(email, password));
   }
 })
 
 const mapStateToProps = (store) => ({
-  isLoggedIn: store.auth.isLoggedIn
+  isLoggedIn: store.auth.isLoggedIn,
+  loginError: store.auth.loginError
 });
 
 
-export default connect(undefined, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

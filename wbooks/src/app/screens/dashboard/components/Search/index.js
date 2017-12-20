@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { actionCreators } from '../../../../actions';
+import { actionCreators } from '../../../../redux';
 import { connect } from 'react-redux';
 import './style.css';
 import * as constants from './constants';
@@ -18,7 +18,6 @@ class Search extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.onSubmit(this.state.titleFilter, this.state.genreFilter);
-   //this.props.updateFilters(this.state.genreFilter, this.state.titleFilter); 
   }
 
   render(){

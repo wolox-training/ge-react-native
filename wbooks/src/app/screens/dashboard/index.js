@@ -2,40 +2,23 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import Catalog from './components/Catalog';
 import Search from './components/Search';
-import * as bookService from '../../../services/bookService';
 import UnauthorizedPage from '../../components/UnauthorizedPage';
-import { actionCreators } from '../../actions';
+import { actionCreators } from '../../redux';
 
 class Dashboard extends Component {
-  state = {
-    books: [],
-  };
 
   componentWillMount(){
     this.props.getBooks();
-  }
-
-  getBooks = () =>{
-    this.setState({loading: true});
-    bookService.getBooks(this.onGetBooksSuccess, this.onGetBooksFailure);
-  }
-
-  onGetBooksSuccess = (books) => {
-    this.setState({loading: false, books: books});
-  }
-
-  onGetBooksFailure = (error) => {
-    this.setState({loading: false, notAuthorized: true});
   }
 
   getFilteredBooks = () => {
     const titleFilter = this.props.titleFilter;
     const genreFilter = this.props.genreFilter;
     if(!titleFilter && !genreFilter) {
-      return this.state.books;
+      return this.props.books;
     }
     else {
-      const newBooks = this.state.books.filter((book) => (
+      const newBooks = this.props.books.filter((book) => (
           (!titleFilter || book.title.toLowerCase().includes(titleFilter.toLowerCase()))
           && (!genreFilter || book.genre.toLowerCase() === genreFilter.toLowerCase())
           ));
@@ -44,24 +27,31 @@ class Dashboard extends Component {
   }
 
   render(){
-    if(this.state.loading)
+    if(this.props.booksLoading)
       return <h1>Cargando...</h1>
-    if(this.state.notAuthorized)
+    if(this.props.notAuthorized || this.props.booksFailed)
       return <UnauthorizedPage/>
     const books = this.getFilteredBooks();
     return(
       <div className="dashboard">
         <Search/>
-        <Catalog books={books}/>
+        {
+          books.length > 0 ? 
+          <Catalog books={books}/> : 
+        <p className="no-books-found" style={{margin: 20}}>No se encontraron coincidencias</p>
+        }
       </div>
       );
   }
 }
 
 const mapStateToProps = (store) => ({
-  genreFilter: store.filter.genre,
-  titleFilter: store.filter.title,
-  booksLoading: store.filter.books
+  genreFilter: store.books.genre,
+  titleFilter: store.books.title,
+  books: store.books.books,
+  booksLoading: store.books.booksLoading,
+  notAuthorized: store.books.notAuthorized,
+  booksFailed: store.books.booksFailed
 });
 
 const mapDispatchToProps = (dispatch) => ({

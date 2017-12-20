@@ -6,40 +6,21 @@ import Comments from './components/Comments';
 import NotFoundPage from '../../components/NotFoundPage';
 import UnauthorizedPage from '../../components/UnauthorizedPage';
 import { DASHBOARD, BOOKS } from '../../../config/routes';
-import * as bookService from '../../../services/bookService';
+import { connect } from 'react-redux';
+import { actionCreators } from '../../redux';
 
 class BookDetail extends Component {
 
-  state = {book: null,
-    comments: [{id: 1, user: 'PERPE', date: '20/43', text:'safamdkfmksgdkj g kjf kjfk jfkj fkjkdjfjksperoowo opwporo owpkr eokr o'},{id: 2, user: 'PERPE', date: '20/43', text:'safamdkfmksgdkj g kjf kjfk jfkj fkjkdjfjksperoowo opwporo owpkr eokr 2'}],
+  state = {
+    comments: [
+      {id: 1, user: 'PERPE', date: '20/43', text:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'},
+      {id: 2, user: 'PERPE', date: '20/43', text:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 2'}
+    ],
     relatedBooks: []
   };
 
   componentWillMount(){
-    this.getBookInfo(this.props.match.params.id);
-  }
-
-
-  getBookInfo(bookId){
-    bookService.getBook(bookId, this.onGetBookSuccess, this.onGetBookFailure);
-    this.setState({loading: true});
-  }
-
-  onGetBookSuccess = (book) => {
-    this.setState({loading:false, book: book});
-    this.getRelatedBooks(book);
-  }
-
-  onGetBookFailure = (error) => {
-    if(error.response.status === 401)
-      this.setState({loading: false, autenticationError: true});
-    else
-      this.setState({loading: false, bookNotFound: true});
-
-  }
-
-  getRelatedBooks(book){
-    bookService.getRelatedBooks(book, this.onGetRelatedBooksSuccess, this.onGetBookFailure);
+    this.props.getBook(this.props.match.params.id);
   }
 
   onGetRelatedBooksSuccess = (books) => {
@@ -52,17 +33,18 @@ class BookDetail extends Component {
   }
 
   render(){
-    const book = this.state.book;
-    if(this.state.autenticationError){
+    const book = this.props.book;
+    if(this.props.notAuthorized){
       return <UnauthorizedPage/>
     }
-    if(this.state.loading){
+    if(this.props.bookLoading){
       return <h1>Cargando...</h1>
     }
-    if(!book || this.state.bookNotFound){
+    if(!book || this.props.bookFailed){
       return <NotFoundPage/>
     }
-    const relatedBooks = this.state.relatedBooks;
+
+    const relatedBooks = this.props.books.filter((storedBook) => storedBook.genre === book.genre && storedBook.id !== book.id).slice(0,5);
 
     const comments = this.state.comments;
 
@@ -120,4 +102,20 @@ BookDetail.propTypes = {
   })
 }
 
-export default BookDetail;
+const mapStateToProps = (store) => ({
+  book: store.books.book,
+  books: store.books.books,
+  bookLoading: store.books.bookLoading,
+  bookFailed: store.books.bookFailed,
+  notAuthorized: store.books.notAuthorized,
+  notFound: store.books.bookNotFound
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getBook: (bookId) => {
+    dispatch(actionCreators.getBook(bookId));
+  }
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookDetail);

@@ -4,24 +4,26 @@ import {Link, Redirect} from 'react-router-dom';
 import notification_img from '../../../../resources/ASSETS/notifications.svg';
 import add_book_img from '../../../../resources/ASSETS/add_book.svg';
 import { LOGIN, ROOT } from '../../../config/routes';
-import * as authService from '../../../services/authService';
+import { actionCreators } from '../../redux';
+import { connect } from 'react-redux'; 
 import './style.css';
 
 
-const Header = () =>(
+const Header = (props) => (
   <div className="header">
     <Link to={ ROOT }><img
       className="logo"
       alt="logo"
       src={logo}/>
     </Link>
-    {authService.isLoggedIn() &&
-    <Menu/>}
+    {props.isLoggedIn ? 
+    <Menu logout={props.logout}/> :
+    <Redirect to={LOGIN}/>}
   </div>
   );
 
 class Menu extends Component {
-  state = {showProfileDropdown: false, isLoggedIn: authService.isLoggedIn()};
+  state = {showProfileDropdown: false};
 
   triggerProfileDropdown = () => {
     this.setState(prevState => {
@@ -50,16 +52,9 @@ class Menu extends Component {
     this.setState({showNotificationsDropdown: false});
   }
 
-  handleLogout = () => {
-    authService.logout();
-    this.setState({showProfileDropdown: false, isLoggedIn: false});
-  }
-
-
   render(){
     return(
       <div>
-        { !this.state.isLoggedIn && <Redirect to={ LOGIN }/> }
         <div className="menu">
 
           <img className="menu-item" alt="notification_img" src={notification_img} onClick={this.triggerNotificationsDropdown}/>
@@ -86,7 +81,7 @@ class Menu extends Component {
             {this.state.showProfileDropdown &&
             <div className="menu-dropdown">
                 <span className="dropdown-text dropdown-item">Perfil</span>
-                <span className="dropdown-text dropdown-item" onMouseDown={this.handleLogout}>Cerrar sesi&oacute;n</span>
+                <span className="dropdown-text dropdown-item" onMouseDown={this.props.logout}>Cerrar sesi&oacute;n</span>
             </div>
             }
           </div>
@@ -96,4 +91,14 @@ class Menu extends Component {
   }
 }
 
-export default Header;
+const mapDispatchToProps = (dispatch) => ({
+  logout: () => {
+    dispatch(actionCreators.logout());
+  }
+})
+
+const mapStateToProps = (store) => ({
+  isLoggedIn: store.auth.isLoggedIn
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

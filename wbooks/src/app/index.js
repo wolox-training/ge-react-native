@@ -7,7 +7,8 @@ import NotFoundPage from './components/NotFoundPage';
 import Login from './screens/login';
 import './style.css';
 import {ROOT, DASHBOARD, BOOKS, LOGIN} from '../config/routes';
-import * as authService from '../services/authService';
+import store from './redux/store';
+import { connect } from 'react-redux'; 
  
 const App = () => (
     <Router className="app">
@@ -28,7 +29,7 @@ const App = () => (
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
-    authService.isLoggedIn() ? (
+    store.getState().auth.isLoggedIn ? (
       <Component {...props}/>
     ) : (
       <Redirect to={{
@@ -38,4 +39,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     )
   )}/>
 )
-export default App;
+
+const mapStateToProps = (store) => ({
+  isLoggedIn: store.auth.isLoggedIn
+})
+
+export default connect(mapStateToProps)(App);
