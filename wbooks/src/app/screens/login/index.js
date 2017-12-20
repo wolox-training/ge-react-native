@@ -15,9 +15,10 @@ class Login extends React.Component {
 
   login = (e) => {
     e.preventDefault();
-
-    if(!this.state.mailError && !this.state.passLengthError){
-      this.props.login(this.state.mail, this.state.pass);
+    if(!this.state.mailError && !this.state.passLengthError) {
+      this.setState({mailError: false, passLengthError: false});
+      if(validations.validateEmail(this.state.mail) && validations.validatePass(this.state.pass))
+        this.props.login(this.state.mail, this.state.pass);    
     }
   }
 
@@ -77,7 +78,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (store) => ({
   isLoggedIn: store.auth.isLoggedIn,
-  loginError: store.auth.loginError
+  loginError: store.auth.loginFailed
 });
 
 
