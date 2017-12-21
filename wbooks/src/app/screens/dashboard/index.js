@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import Catalog from './components/Catalog';
 import Search from './components/Search';
 import UnauthorizedPage from '../../components/UnauthorizedPage';
-import { actionCreators } from '../../redux';
+import booksActions from '../../redux/Books/actions';
+import './style.css';
 
 class Dashboard extends Component {
 
@@ -38,7 +39,7 @@ class Dashboard extends Component {
         {
           books.length > 0 ? 
           <Catalog books={books}/> : 
-        <p className="no-books-found" style={{margin: 20}}>No se encontraron coincidencias</p>
+        <p className="no-books-found">No se encontraron coincidencias</p>
         }
       </div>
       );
@@ -56,7 +57,7 @@ const mapStateToProps = (store) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getBooks: () => {
-    dispatch(actionCreators.getBooks());
+    dispatch(booksActions.getBooks());
   }
 })
 

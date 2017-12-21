@@ -7,7 +7,7 @@ import NotFoundPage from '../../components/NotFoundPage';
 import UnauthorizedPage from '../../components/UnauthorizedPage';
 import { DASHBOARD, BOOKS } from '../../../config/routes';
 import { connect } from 'react-redux';
-import { actionCreators } from '../../redux';
+import booksActions from '../../redux/Books/actions';
 
 class BookDetail extends Component {
 
@@ -113,7 +113,7 @@ const mapStateToProps = (store) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getBook: (bookId) => {
-    dispatch(actionCreators.getBook(bookId));
+    dispatch(booksActions.getBook(bookId));
   }
 })
 

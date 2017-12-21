@@ -4,20 +4,20 @@ import {Link, Redirect} from 'react-router-dom';
 import notification_img from '../../../../resources/ASSETS/notifications.svg';
 import add_book_img from '../../../../resources/ASSETS/add_book.svg';
 import { LOGIN, ROOT } from '../../../config/routes';
-import { actionCreators } from '../../redux';
+import authActions from '../../redux/Authentication/actions';
 import { connect } from 'react-redux'; 
 import './style.css';
 
 
-const Header = (props) => (
+const Header = ({isLoggedIn, logout}) => (
   <div className="header">
     <Link to={ ROOT }><img
       className="logo"
       alt="logo"
       src={logo}/>
     </Link>
-    {props.isLoggedIn ? 
-    <Menu logout={props.logout}/> :
+    {isLoggedIn ? 
+    <Menu logout={logout}/> :
     <Redirect to={LOGIN}/>}
   </div>
   );
@@ -93,7 +93,7 @@ class Menu extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   logout: () => {
-    dispatch(actionCreators.logout());
+    dispatch(authActions.logout());
   }
 })
 
