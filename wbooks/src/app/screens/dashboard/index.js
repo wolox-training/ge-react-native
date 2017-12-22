@@ -1,57 +1,65 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import Catalog from './components/Catalog';
 import Search from './components/Search';
-import * as bookService from '../../../services/bookService';
 import UnauthorizedPage from '../../components/UnauthorizedPage';
+import booksActions from '../../redux/Books/actions';
+import './style.css';
 
 class Dashboard extends Component {
-  state = {
-    filteredBooks: [],
-    books: []
-  };
 
   componentWillMount(){
-    this.getBooks();
+    this.props.getBooks();
   }
 
-  getBooks = () =>{
-    this.setState({loading: true});
-    bookService.getBooks(this.onGetBooksSuccess, this.onGetBooksFailure);
-  }
-
-  onGetBooksSuccess = (books) => {
-    this.setState({loading: false, books: books, filteredBooks: books});
-  }
-  onGetBooksFailure = (error) => {
-    this.setState({loading: false, notAuthorized: true});
-  }
-
-  updateFilters = (dropdownFilter, textFilter) => {
-
-    if(!textFilter && !dropdownFilter) {
-      this.setState({filteredBooks:this.state.books});
+  getFilteredBooks = () => {
+    const titleFilter = this.props.titleFilter;
+    const genreFilter = this.props.genreFilter;
+    if(!titleFilter && !genreFilter) {
+      return this.props.books;
     }
     else {
-      const newBooks = this.state.books.filter((book) => (
-          (!textFilter || book.title.toLowerCase().includes(textFilter.toLowerCase()))
-          && (!dropdownFilter || book.genre.toLowerCase() === dropdownFilter.toLowerCase())
+      const newBooks = this.props.books.filter((book) => (
+          (!titleFilter || book.title.toLowerCase().includes(titleFilter.toLowerCase()))
+          && (!genreFilter || book.genre.toLowerCase() === genreFilter.toLowerCase())
           ));
-      this.setState({filteredBooks: newBooks});
-    }
+      return newBooks;
+    }    
   }
 
   render(){
-    if(this.state.loading)
+    if(this.props.booksLoading)
       return <h1>Cargando...</h1>
-    if(this.state.notAuthorized)
+    if(this.props.notAuthorized || this.props.booksFailed)
       return <UnauthorizedPage/>
+    const books = this.getFilteredBooks();
     return(
       <div className="dashboard">
-        <Search updateFilters={this.updateFilters}/>
-        <Catalog books={this.state.filteredBooks}/>
+        <Search/>
+        {
+          books.length > 0 ? 
+          <Catalog books={books}/> : 
+        <p className="no-books-found">No se encontraron coincidencias</p>
+        }
       </div>
       );
   }
 }
 
-export default Dashboard;
+const mapStateToProps = (store) => ({
+  genreFilter: store.books.genre,
+  titleFilter: store.books.title,
+  books: store.books.books,
+  booksLoading: store.books.booksLoading,
+  notAuthorized: store.books.notAuthorized,
+  booksFailed: store.books.booksFailed
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getBooks: () => {
+    dispatch(booksActions.getBooks());
+  }
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

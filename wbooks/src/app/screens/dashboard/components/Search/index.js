@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import booksActions from '../../../../redux/Books/actions';
+import { connect } from 'react-redux';
 import './style.css';
 import * as constants from './constants';
 
@@ -10,12 +12,12 @@ class Search extends Component {
   }
 
   handleSelectChange = (e) => {
-    this.setState({dropdownFilter: e.target.value});
+    this.setState({genreFilter: e.target.value});
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-   this.props.updateFilters(this.state.dropdownFilter, this.state.titleFilter); 
+    this.props.onSubmit(this.state.titleFilter, this.state.genreFilter);
   }
 
   render(){
@@ -37,4 +39,10 @@ class Search extends Component {
   }
 }
 
-export default Search;
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (titleFilter, genreFilter) => {
+    dispatch(booksActions.changeFilter(genreFilter, titleFilter));
+  }
+})
+
+export default connect(undefined, mapDispatchToProps)(Search);
