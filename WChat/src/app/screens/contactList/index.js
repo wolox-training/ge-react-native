@@ -3,40 +3,38 @@ import contacts from '../../../../resources/contacts.json';
 import Contact from './components/Contact';
 import {
   View,
-  SectionList,
+  FlatList,
   ListItem,
   Text,
-  StyleSheet
+  StyleSheet,
+  TextInput
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons'; 
 import styles from './styles'
 
-console.log(contacts);
-let asd = [{id: 'pe'}];
-export default class ContactList extends Component {
-  render() {
-    
-    const createContactsHeader = ({section}) => 
-      <Text style={styles.sectionHeader}>
-        <Text style={section.title==='Online' ? styles.onlineBullet : styles.offlineBullet}>
-          &bull;&nbsp;
-        </Text>
-        {section.title}
-      </Text>;
-
+class FilterAddBar extends Component {
+  state = {filter: '', filtering: false}
+  render(){
     return (
-        <View style={styles.container}>
-          <SectionList
-            sections={[
-            {title: 'Online', data: contacts},
-            {title: 'Offline', data: []},
-            ]}
-            renderItem={({item}) => <Contact contact={item}/>}
-            renderSectionHeader={createContactsHeader}
-            keyExtractor={(item, index) => index}
-          />
-        </View>
-      )
+    <View style={{flexDirection: 'row'}}>
+      <Ionicons style={this.state.filtering ? {display: 'none'} : {flex: 1, textAlign: 'center'}} name="md-search" size={26} onPress={() => this.setState({filtering:true})}/>
+      <TextInput style={this.state.filtering ? {flex: 8} : {flex:8, display: 'none'}} value={this.state.filter} onChangeText={(filter) => this.setState({filter})}/>
+      <Text style={!this.state.filtering ? {display: 'none'} : {flex: 1, textAlign: 'center', fontSize: 30,}} onPress={() => this.setState({filtering: false})}>&#10006;</Text>
+      <Ionicons style={this.state.filtering ? {display: 'none'} : {flex: 1, textAlign: 'center'}} name="md-add" size={26}/>
+    </View>
+    );
   }
 }
 
+const ContactList = () => (
+  <View style={styles.container}>
+    <FilterAddBar/>
+    <FlatList
+      data={contacts}
+      renderItem={({item}) => <Contact contact={item}/>}
+      keyExtractor={(item, index) => index}
+    />
+  </View>
+)
 
+export default ContactList;

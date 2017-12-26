@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
-  View
+  View,
+  Button,
+  Text
 } from 'react-native';
 import ContactList from './screens/contactList';
 import styles from './styles';
+import RootNavigator from './components/RootNavigator';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -14,12 +17,10 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-export default class App extends Component<{}> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <ContactList/>
-      </View>
-    );
-  }
-}
+const App = () => (
+  <View style={styles.container}>
+    <RootNavigator/>
+  </View>
+);
+
+export default App;
