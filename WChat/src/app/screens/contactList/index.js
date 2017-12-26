@@ -5,7 +5,6 @@ import {
   View,
   SectionList,
   ListItem,
-  Header,
   Text,
   StyleSheet
 } from 'react-native';
@@ -15,18 +14,29 @@ console.log(contacts);
 let asd = [{id: 'pe'}];
 export default class ContactList extends Component {
   render() {
+    
+    const createContactsHeader = ({section}) => 
+      <Text style={styles.sectionHeader}>
+        <Text style={section.title==='Online' ? styles.onlineBullet : styles.offlineBullet}>
+          &bull;&nbsp;
+        </Text>
+        {section.title}
+      </Text>;
+
     return (
         <View style={styles.container}>
-         <SectionList
-          sections={[
+          <SectionList
+            sections={[
             {title: 'Online', data: contacts},
             {title: 'Offline', data: []},
-          ]}
-          renderItem={({item}) => <Contact contact={item}/>}
-          renderSectionHeader={({section}) => <Text style={styles.sectionHeader}><Text style={section.title==='Online' ? styles.onlineBullet : styles.offlineBullet}>&bull; </Text>{section.title}</Text>}
-          keyExtractor={(item, index) => index}
-        />
+            ]}
+            renderItem={({item}) => <Contact contact={item}/>}
+            renderSectionHeader={createContactsHeader}
+            keyExtractor={(item, index) => index}
+          />
         </View>
       )
   }
 }
+
+
