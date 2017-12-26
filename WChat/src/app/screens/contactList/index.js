@@ -6,6 +6,7 @@ import {
   FlatList,
   StyleSheet
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons'; 
 import styles from './styles'
 import FilterAddBar from '../../components/FilterAddBar';
 
