@@ -5,7 +5,7 @@ import {
   View,
   FlatList,
   StyleSheet
-} from 'react-native'; 
+} from 'react-native';
 import styles from './styles'
 import FilterAddBar from '../../components/FilterAddBar';
 
