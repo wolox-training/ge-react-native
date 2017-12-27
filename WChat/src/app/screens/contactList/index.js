@@ -9,13 +9,17 @@ import {
 import styles from './styles'
 import FilterAddBar from '../../components/FilterAddBar';
 
+const createContact = ({item}) => <Contact contact={item}/>;
+
+const contactListKeyExtractor = (item, index) => item.id;
+
 const ContactList = () => (
   <View style={styles.container}>
     <FilterAddBar/>
     <FlatList
       data={contacts}
-      renderItem={({item}) => <Contact contact={item}/>}
-      keyExtractor={(item, index) => index}
+      renderItem={createContact}
+      keyExtractor={contactListKeyExtractor}
     />
   </View>
 )
