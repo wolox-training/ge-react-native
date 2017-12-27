@@ -1,14 +1,15 @@
 import { StyleSheet } from 'react-native';
+import { LIGHT_GREY, SOFT_BLACK, GREY } from '../../../utils/colors';
 
 const styles = StyleSheet.create({
   contactContainer: {
     flex: 1,
     flexDirection: 'row',
-    paddingRight: 10,
     paddingLeft: 10,
+    paddingRight: 10,
     paddingBottom: 5,
     marginBottom: 5,
-    borderBottomColor: '#AAA',
+    borderBottomColor: LIGHT_GREY,
     borderBottomWidth: 1,
   },
   contactImage: {
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 50,
     borderWidth: 0.5,
-    borderColor: '#d6d7da',
+    borderColor: GREY,
   },
   contactDataContainer: {
     flex: 4,
@@ -26,10 +27,10 @@ const styles = StyleSheet.create({
   },
   contactName: {
     fontWeight: 'bold',
-    color: '#111',
+    color: SOFT_BLACK,
   },
   contactLastMessage: {
-    color: '#AAA',
+    color: LIGHT_GREY,
   },
 });
 
