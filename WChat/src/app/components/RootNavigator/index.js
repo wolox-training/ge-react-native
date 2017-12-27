@@ -1,16 +1,11 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.14
 import Ionicons from 'react-native-vector-icons/Ionicons'; // 4.4.2
 import ContactList from '../../screens/contactList';
 import Chats from '../../screens/chats';
 import Groups from '../../screens/groups';
 
-const ProfileScreen = () => (
-  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>Profile Screen</Text>
-  </View>
-);
+
 
 const RootTabs = TabNavigator({
   Chats: {

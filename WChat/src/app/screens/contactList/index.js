@@ -11,7 +11,7 @@ import FilterAddBar from '../../components/FilterAddBar';
 
 const createContact = ({item}) => <Contact contact={item}/>;
 
-const contactListKeyExtractor = (item, index) => item.id;
+const contactListKeyExtractor = (item) => item.id;
 
 const ContactList = () => (
   <View style={styles.container}>

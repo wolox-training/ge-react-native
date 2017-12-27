@@ -8,14 +8,17 @@ import {
   StyleSheet
 } from 'react-native';
 import styles from './styles'
+const createGroup = ({item}) => <Group group={item}/>;
+
+const groupListKeyExtractor = (item) => item.id;
 
 const GroupList = () => (
   <View style={styles.container}>
     <FilterAddBar/>
     <FlatList
       data={groups}
-      renderItem={({item}) => <Group group={item}/>}
-      keyExtractor={(item, index) => index}
+      renderItem={createGroup}
+      keyExtractor={groupListKeyExtractor}
     />
   </View>
 )

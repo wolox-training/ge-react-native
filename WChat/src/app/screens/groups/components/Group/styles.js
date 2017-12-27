@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { LIGHT_GREY, SOFT_BLACK} from '../../../../../utils/colors';
 
 const styles = StyleSheet.create({
   groupContainer: {
@@ -9,7 +10,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingBottom: 5,
     marginBottom: 5,
-    borderBottomColor: '#AAA',
+    borderBottomColor: LIGHT_GREY,
     borderBottomWidth: 1,
   },
   groupDataContainer: {
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
   },
   groupName: {
     fontWeight: 'bold',
-    color: '#111',
+    color: SOFT_BLACK,
   },
 });
 

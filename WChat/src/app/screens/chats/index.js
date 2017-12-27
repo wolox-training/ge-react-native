@@ -5,15 +5,19 @@ import {
   View,
   FlatList,
   StyleSheet
-} from 'react-native';
+} from 'react-native'; 
 import styles from './styles'
+
+const createContact = ({item}) => <Contact contact={item}/>;
+
+const contactListKeyExtractor = (item) => item.id;
 
 const ContactList = () => (
   <View style={styles.container}>
     <FlatList
       data={contacts}
-      renderItem={({item}) => <Contact contact={item}/>}
-      keyExtractor={(item, index) => index}
+      renderItem={createContact}
+      keyExtractor={contactListKeyExtractor}
     />
   </View>
 )
