@@ -18,7 +18,7 @@ class FilterAddBar extends Component {
     return (
     <View style={{flexDirection: 'row'}}>
       <Ionicons style={this.state.filtering ? {display: 'none'} : {flex: 1, textAlign: 'center'}} name="md-search" size={26} onPress={() => this.setState({filtering:true})}/>
-      <TextInput style={this.state.filtering ? {flex: 8} : {flex:8, display: 'none'}} value={this.state.filter} onChangeText={(filter) => this.setState({filter})}/>
+      <TextInput style={this.state.filtering ? {flex: 8} : {flex: 8, display: 'none'}} value={this.state.filter} onChangeText={(filter) => this.setState({filter})}/>
       <Text style={!this.state.filtering ? {display: 'none'} : {flex: 1, textAlign: 'center', fontSize: 30,}} onPress={() => this.setState({filtering: false})}>&#10006;</Text>
       <Ionicons style={this.state.filtering ? {display: 'none'} : {flex: 1, textAlign: 'center'}} name="md-add" size={26}/>
     </View>
