@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import contacts from '../../../../resources/contacts.json';
-import Contact from './components/Contact';
+import Contact from '../../components/Contact';
 import {
   View,
   FlatList,
-  ListItem,
-  Text,
   StyleSheet
 } from 'react-native';
 import styles from './styles'
