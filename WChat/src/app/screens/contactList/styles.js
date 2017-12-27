@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { LIGHT_GREY, GREEN, RED } from '../../../utils/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -7,13 +8,13 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     paddingTop: 2,
-    paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 2,
+    paddingLeft: 10,
     fontSize: 14,
     fontWeight: 'bold',
     backgroundColor: 'rgba(247,247,247,1.0)',
-    borderBottomColor: '#AAA',
+    borderBottomColor: LIGHT_GREY,
     borderBottomWidth: 1,
     marginBottom: 5,
   },
@@ -24,11 +25,11 @@ const styles = StyleSheet.create({
   },
   onlineBullet: {
     fontSize: 14  ,
-    color: 'green',
+    color: GREEN,
   },
   offlineBullet: {
     fontSize: 14  ,
-    color: 'red',
+    color: RED,
   }
 });
 

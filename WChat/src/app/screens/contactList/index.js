@@ -4,35 +4,37 @@ import Contact from './components/Contact';
 import {
   View,
   SectionList,
-  ListItem,
-  Text,
-  StyleSheet
+  Text
 } from 'react-native';
 import styles from './styles'
 
-console.log(contacts);
-let asd = [{id: 'pe'}];
-export default class ContactList extends Component {
-  render() {
-    
-    const createContactsHeader = ({section}) => 
-      <Text style={styles.sectionHeader}>
-        <Text style={section.title==='Online' ? styles.onlineBullet : styles.offlineBullet}>
-          &bull;&nbsp;
-        </Text>
-        {section.title}
-      </Text>;
+const createContactsHeader = ({section}) => 
+  <Text style={styles.sectionHeader}>
+    <Text style={section.title==='Online' ? styles.onlineBullet : styles.offlineBullet}>
+      &bull;&nbsp;
+    </Text>
+    {section.title}
+  </Text>;
 
+const createContact = ({item}) => <Contact contact={item}/>;
+
+const contactListKeyExtractor = (item, index) => item.id;
+
+export default class ContactList extends Component {
+  
+  sections = [
+    {title: 'Online', data: contacts},
+    {title: 'Offline', data: []},
+  ];
+
+  render() { 
     return (
         <View style={styles.container}>
           <SectionList
-            sections={[
-            {title: 'Online', data: contacts},
-            {title: 'Offline', data: []},
-            ]}
-            renderItem={({item}) => <Contact contact={item}/>}
+            sections={this.sections}
+            renderItem={createContact}
             renderSectionHeader={createContactsHeader}
-            keyExtractor={(item, index) => index}
+            keyExtractor={contactListKeyExtractor}
           />
         </View>
       )
