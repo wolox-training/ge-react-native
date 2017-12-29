@@ -1,22 +1,31 @@
-import * as MessageService from '../../../services/MessageService';
+import * as ChatService from '../../../services/chatService';
 import actionTypes from '../actionTypes';
 
 const messageActions = {
-
+  getMessagesLoading(){
+    return {
+      type: actionTypes.GET_MESSAGES_LOADING
+    };
+  },
   getMessageSuccess(Messages){
     return {
-      type:actionTypes.MESSAGES_LOADED, 
+      type:actionTypes.GET_MESSAGES_LOADED, 
       Messages
     };
   },
+  getMessagesFailure(message){
+    return {
+      type: actionTypes.GET_MESSAGES_FAILURE
+    }
+  }
 }
 
 const actionCreators = {
-  getMessages() {
+  getChats(userId, receiverId) {
     return async dispatch => {
        dispatch (messageActions.getMessagesLoading());
       try {
-        const response = await MessageService.getMessages();
+        const response = await ChatService.getChats(userId, receiverId);
         if(response.status === 200) {
           dispatch(messageActions.getMessagesSuccess(response.data));
         } else {

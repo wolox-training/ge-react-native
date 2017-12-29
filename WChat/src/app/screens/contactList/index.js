@@ -1,12 +1,11 @@
 import React from 'react';
-import contacts from '../../../../resources/contacts.json';
 import Contact from '../../components/Contact';
 import {
   View,
   FlatList,
   StyleSheet
-} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons'; 
+} from 'react-native'; 
+import { connect } from 'react-redux';
 import styles from './styles'
 import FilterAddBar from '../../components/FilterAddBar';
 
@@ -14,7 +13,7 @@ const createContact = ({item}) => <Contact contact={item}/>;
 
 const contactListKeyExtractor = (item) => item.id;
 
-const ContactList = () => (
+const ContactList = ({contacts}) => (
   <View style={styles.container}>
     <FilterAddBar/>
     <FlatList
@@ -25,4 +24,8 @@ const ContactList = () => (
   </View>
 )
 
-export default ContactList;
+const mapStateToProps = (store) => ({
+  contacts: store.user.contacts
+})
+
+export default connect(mapStateToProps)(ContactList);

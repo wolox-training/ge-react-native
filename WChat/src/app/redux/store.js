@@ -1,8 +1,10 @@
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import messageReducer from './message/reducer';
+import message from './message/reducer';
+import user from './user/reducer';
+import group from './group/reducer';
 
-const RootReducer = combineReducers({messageReducer});
+const RootReducer = combineReducers({message, user, group});
 
 const store = createStore(RootReducer, applyMiddleware(thunk));
 

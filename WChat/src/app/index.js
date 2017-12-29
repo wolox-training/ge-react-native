@@ -1,20 +1,38 @@
-import React from 'react';
+
+import React, { Component } from 'react';
 import {
   View
 } from 'react-native';
 import styles from './styles';
 import RootNavigator from './components/RootNavigator';
-import { Provider } from 'react-redux';
-import store from './redux/store';
+import { connect } from 'react-redux';
+import userActions from './redux/user/actions';
 
 
+class App extends Component {
 
-const App = () => (
-  <Provider store={store}>
-  <View style={styles.container}>
-    <RootNavigator/>
-  </View>
-  </Provider>
-);
+  componentDidMount(){
+    this.props.initApp(this.props.username);
+  }
 
-export default App;
+  render(){
+    return (
+      <View style={styles.container}>
+        <RootNavigator screenProps={{user: this.props.user, appLoading: this.props.appLoading}}/>
+      </View>
+    );
+  }
+}
+
+const mapStateToProps = (store) => ({
+  username: store.user.username,
+  appLoading: store.user.appLoading
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  initApp: () => {
+    dispatch(userActions.initApp());
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

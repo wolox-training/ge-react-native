@@ -16,7 +16,7 @@ const Contact = ({contact}) =>(
     />
     <View style={styles.contactDataContainer}>
       <Text style={styles.contactName}>{contact.username}</Text>
-      <Text style={styles.contactLastMessage} numberOfLines={1} >{lastMessage}</Text>
+      <Text style={styles.contactLastMessage} numberOfLines={1} >{contact.lastChat? contact.lastChat.body : ''}</Text>
     </View>
   </View>
 )
