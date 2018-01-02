@@ -11,6 +11,15 @@ const message = (state = initialState, action) => {
       return Immutable.merge(state, {
         contacts: action.contacts
       });
+    case actionTypes.GET_MESSAGES_LOADING:
+      return Immutable.merge(state, {
+        groupsLoading: true
+      });
+    case actionTypes.GET_MESSAGES_FAILURE:
+      return Immutable.merge(state, {
+        groupsLoading: false,
+        groupsError: action.error
+      });
     default:
       return state;
   };

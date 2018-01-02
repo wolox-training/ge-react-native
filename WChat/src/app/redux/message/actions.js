@@ -9,7 +9,7 @@ const messageActions = {
   },
   getMessageSuccess(Messages){
     return {
-      type:actionTypes.GET_MESSAGES_LOADED, 
+      type:actionTypes.GET_MESSAGES_SUCCESS, 
       Messages
     };
   },
