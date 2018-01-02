@@ -1,11 +1,15 @@
 import React from 'react';
-import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.14
+import { TabNavigator, StackNavigator } from 'react-navigation'; // 1.0.0-beta.14
 import Ionicons from 'react-native-vector-icons/Ionicons'; // 4.4.2
 import ContactList from '../../screens/contactList';
 import Chats from '../../screens/chats';
 import Groups from '../../screens/groups';
+import Chat from '../../screens/chat';
+import GroupChat from '../../screens/groupChat';
 
-const RootTabs = TabNavigator({
+
+
+const HomeTabs = TabNavigator({
   Chats: {
     screen: Chats,
     navigationOptions: {
@@ -47,4 +51,25 @@ const RootTabs = TabNavigator({
   }
 });
 
-export default RootTabs;
+const RootStack = StackNavigator({
+  Home: {
+    screen: HomeTabs,
+    navigationOptions: {
+      headerTitle: 'Home',
+    }
+  },
+  Chat: {
+    screen: Chat,
+    navigationOptions: ({navigation}) => ({
+      title: navigation.state.params.contact.username
+    })
+  },
+  GroupChat: {
+    screen: GroupChat,
+    navigationOptions: ({navigation}) => ({
+      title: navigation.state.params.group.name
+    })
+  }
+})
+
+export default RootStack;

@@ -1,6 +1,5 @@
 import Immutable from 'seamless-immutable';
 import actionTypes from '../actionTypes';
-import Reactotron from 'reactotron-react-native';
 
 const initialState = {
   contacts: [],
@@ -41,9 +40,9 @@ const user = (state = initialState, action) => {
       const oldContactIndex = state.contacts.findIndex((contact) => contact.id === action.receiverId);
       const oldContact = state.contacts[oldContactIndex];
       let newContact =  {
+        ...oldContact,
         chats: action.chats,
-        lastChat: action.chats.reduce((latest, current) => latest.createdAt > current.createdAt ? latest : current),
-        ...oldContact
+        lastChat: action.chats.reduce((latest, current) => latest.createdAt > current.createdAt ? latest : current)
       }
 
       let newContacts = state.contacts
@@ -51,9 +50,6 @@ const user = (state = initialState, action) => {
       .concat(newContact)
       .concat(state.contacts
         .slice(oldContactIndex + 1, state.contacts.length + 1 ))
-
-
-      Reactotron.log(JSON.stringify(newContacts));
       return Immutable.merge(state, {
         contacts: newContacts
       })

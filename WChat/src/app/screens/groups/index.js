@@ -4,20 +4,28 @@ import FilterAddBar from '../../components/FilterAddBar';
 import {
   View,
   FlatList,
-  StyleSheet, Text
+  StyleSheet, 
+  Text,
+  TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux'
 import styles from './styles'
-const createGroup = ({item}) => <Group group={item}/>;
+
+const createGroup = (navigation) => ({item}) => 
+  <TouchableOpacity 
+    onPress={() => {
+      navigation.navigate('GroupChat', {group: item})}}>
+    <Group group={item}/>
+  </TouchableOpacity>
 
 const groupListKeyExtractor = (item) => item.id;
 
-const GroupList = ({groups, groupsLoading}) => (
+const GroupList = ({groups, groupsLoading, navigation}) => (
   <View style={styles.container}>
     <FilterAddBar/>
     <FlatList
       data={groups}
-      renderItem={createGroup}
+      renderItem={createGroup(navigation)}
       keyExtractor={groupListKeyExtractor}
     />
   </View>

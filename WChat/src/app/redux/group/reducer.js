@@ -1,6 +1,5 @@
 import Immutable from 'seamless-immutable';
 import actionTypes from '../actionTypes';
-import Reactotron from 'reactotron-react-native';
 
 const initialState = {
   groups: [],
@@ -23,6 +22,23 @@ const group = (state = initialState, action) => {
         groupsLoading: false,
         groupsError: action.error
       });
+    case actionTypes.GET_GROUP_CHAT_SUCCESS:
+      const oldGroupIndex = state.groups.findIndex((group) => group.id === action.groupId);
+      const oldGroup = state.groups[oldGroupIndex];
+      let newGroup =  {
+        ...oldGroup,
+        chats: action.chats,
+        lastChat: action.chats.reduce((latest, current) => latest.createdAt > current.createdAt ? latest : current)
+      }
+
+      let newGroups = state.groups
+      .slice(0, oldGroupIndex)
+      .concat(newGroup)
+      .concat(state.groups
+        .slice(oldGroupIndex + 1, state.groups.length + 1 ))
+      return Immutable.merge(state, {
+        groups: newGroups
+      })
     default:
       return state;
   };

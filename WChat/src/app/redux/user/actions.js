@@ -1,6 +1,5 @@
 import * as ChatService from '../../../services/chatService';
 import actionTypes from '../actionTypes';
-import Reactotron from 'reactotron-react-native';
 import groupActions from '../group/actions';
 
 const userActions = {
@@ -72,7 +71,6 @@ const actionCreators = {
       try {
         const response = await ChatService.getContacts(userId);
         if(response.status === 200) {
-          Reactotron.log(JSON.stringify(response));
           const contacts = response.data;
           dispatch(userActions.getContactsSuccess(contacts));
           contacts.forEach((contact) => {

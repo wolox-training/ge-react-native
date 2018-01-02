@@ -4,7 +4,7 @@ import message from './message/reducer';
 import user from './user/reducer';
 import group from './group/reducer';
 
-const RootReducer = combineReducers({message, user, group});
+const RootReducer = combineReducers({user, group});
 
 const store = createStore(RootReducer, applyMiddleware(thunk));
 

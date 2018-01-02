@@ -3,30 +3,33 @@ import Contact from '../../components/Contact';
 import {
   View,
   FlatList,
-  StyleSheet,
-  Text
+  TouchableOpacity
 } from 'react-native'; 
 import { connect } from 'react-redux';
 import styles from './styles'
 
-const createContact = ({ item }) => <Contact contact={item}/>;
+
+const createContact = (navigation) => ({item}) => 
+  <TouchableOpacity 
+    onPress={() => {
+      navigation.navigate('Chat', {contact: item})}}>
+    <Contact contact={item} />
+  </TouchableOpacity>;
 
 const contactListKeyExtractor = (item) => item.id;
 
-const ContactList = ({contacts}) => (
+const ContactList = ({contacts, navigation}) => (
   <View style={styles.container}>
     <FlatList
       data={contacts}
-      renderItem={createContact}
+      renderItem={createContact(navigation)}
       keyExtractor={contactListKeyExtractor}
     />
   </View>
 )
 
 const mapStateToProps = (store) => ({
-  user: store.user.user,
-  contacts: store.user.contacts,
-  appLoading: store.user.appLoading
+  contacts: store.user.contacts
 })
 
 export default connect(mapStateToProps)(ContactList);

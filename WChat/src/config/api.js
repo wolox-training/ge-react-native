@@ -1,7 +1,6 @@
 import axios from 'axios';
-import Reactotron from 'reactotron-react-native'
+import { CHAT_URL } from '../utils/constants';
 
-const CHAT_URL = 'http://10.0.0.159:3000';
 const config = {};
 export const post =  (url, payload) => {
   return axios.post(`${CHAT_URL}${url}`, payload, config)
