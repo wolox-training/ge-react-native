@@ -8,7 +8,7 @@ import {
 } from 'react-native'; 
 import styles from './styles'
 
-const createContact = ({item}) => <Contact contact={item}/>;
+const createContact = ({ item }) => <Contact contact={item}/>;
 
 const contactListKeyExtractor = (item) => item.id;
 

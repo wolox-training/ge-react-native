@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 
-const Group = ({group}) => (
+const Group = ({ group }) => (
   <View style={styles.groupContainer}>
     <View style={styles.groupDataContainer}>
       <Text style={styles.groupName}>{group.name}</Text>

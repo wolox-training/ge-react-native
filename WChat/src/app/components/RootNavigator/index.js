@@ -5,8 +5,6 @@ import ContactList from '../../screens/contactList';
 import Chats from '../../screens/chats';
 import Groups from '../../screens/groups';
 
-
-
 const RootTabs = TabNavigator({
   Chats: {
     screen: Chats,

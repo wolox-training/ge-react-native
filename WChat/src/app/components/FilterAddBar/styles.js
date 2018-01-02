@@ -7,7 +7,8 @@ const styles = StyleSheet.create({
     height: 40,
   },
   filterSearchIcon: {
-    flex: 1, textAlign: 'center'
+    flex: 1, 
+    textAlign: 'center'
   },
   filterTextInput: {
     flex: 8
@@ -18,7 +19,8 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   filterAdd: {
-    flex: 1, textAlign: 'center'
+    flex: 1, 
+    textAlign: 'center'
   },
   hiddenNode: {
     display: 'none'
