@@ -1,36 +1,26 @@
 import { StyleSheet } from 'react-native';
-import { LIGHT_GREY, SOFT_BLACK, GREY } from '../../../../../utils/colors';
+import { LIGHT_GREY, SOFT_BLACK} from '../../../../../utils/colors';
 
 const styles = StyleSheet.create({
-  contactContainer: {
+  groupContainer: {
     flex: 1,
     flexDirection: 'row',
-    paddingLeft: 10,
+    height: 30,
     paddingRight: 10,
+    paddingLeft: 10,
     paddingBottom: 5,
     marginBottom: 5,
     borderBottomColor: LIGHT_GREY,
     borderBottomWidth: 1,
   },
-  contactImage: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
-    borderRadius: 50,
-    borderWidth: 0.5,
-    borderColor: GREY,
-  },
-  contactDataContainer: {
+  groupDataContainer: {
     flex: 4,
     flexDirection: 'column',
     justifyContent: 'space-around'
   },
-  contactName: {
+  groupName: {
     fontWeight: 'bold',
     color: SOFT_BLACK,
-  },
-  contactLastMessage: {
-    color: LIGHT_GREY,
   },
 });
 

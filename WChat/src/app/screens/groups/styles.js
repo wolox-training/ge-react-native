@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { LIGHT_GREY } from '../../../utils/colors';
 
+
 const styles = StyleSheet.create({
   container: {
    flex: 1,
@@ -8,9 +9,9 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     paddingTop: 2,
+    paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 2,
-    paddingLeft: 10,
     fontSize: 14,
     fontWeight: 'bold',
     backgroundColor: 'rgba(247,247,247,1.0)',
