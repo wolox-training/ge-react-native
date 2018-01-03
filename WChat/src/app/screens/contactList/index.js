@@ -1,27 +1,44 @@
-import React from 'react';
+import React, { Component } from 'react';
 import contacts from '../../../../resources/contacts.json';
-import Contact from '../../components/Contact';
+import Contact from './components/Contact';
 import {
   View,
-  FlatList,
-  StyleSheet
-} from 'react-native'; 
+  SectionList,
+  Text
+} from 'react-native';
 import styles from './styles'
-import FilterAddBar from '../../components/FilterAddBar';
+
+const createContactsHeader = ({section}) => 
+  <Text style={styles.sectionHeader}>
+    <Text style={section.title==='Online' ? styles.onlineBullet : styles.offlineBullet}>
+      &bull;&nbsp;
+    </Text>
+    {section.title}
+  </Text>;
 
 const createContact = ({item}) => <Contact contact={item}/>;
 
-const contactListKeyExtractor = (item) => item.id;
+const contactListKeyExtractor = (item, index) => item.id;
 
-const ContactList = () => (
-  <View style={styles.container}>
-    <FilterAddBar/>
-    <FlatList
-      data={contacts}
-      renderItem={createContact}
-      keyExtractor={contactListKeyExtractor}
-    />
-  </View>
-)
+export default class ContactList extends Component {
+  
+  sections = [
+    {title: 'Online', data: contacts},
+    {title: 'Offline', data: []},
+  ];
 
-export default ContactList;
+  render() { 
+    return (
+        <View style={styles.container}>
+          <SectionList
+            sections={this.sections}
+            renderItem={createContact}
+            renderSectionHeader={createContactsHeader}
+            keyExtractor={contactListKeyExtractor}
+          />
+        </View>
+      )
+  }
+}
+
+

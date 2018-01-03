@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { LIGHT_GREY } from '../../../utils/colors';
+import { LIGHT_GREY, GREEN, RED } from '../../../utils/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,6 +22,14 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     height: 44,
+  },
+  onlineBullet: {
+    fontSize: 14  ,
+    color: GREEN,
+  },
+  offlineBullet: {
+    fontSize: 14  ,
+    color: RED,
   }
 });
 
