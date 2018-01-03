@@ -1,27 +1,36 @@
 import React from 'react';
-import contacts from '../../../../resources/contacts.json';
 import Contact from '../../components/Contact';
 import {
   View,
   FlatList,
-  StyleSheet
+  TouchableOpacity
 } from 'react-native'; 
+import { connect } from 'react-redux';
 import styles from './styles'
 import FilterAddBar from '../../components/FilterAddBar';
 
-const createContact = ({item}) => <Contact contact={item}/>;
+const createContact = (navigation) => ({item}) => 
+  <TouchableOpacity 
+    onPress={() => {
+      navigation.navigate('Chat', {contact: item})}}>
+    <Contact contact={item} />
+  </TouchableOpacity>;
 
 const contactListKeyExtractor = (item) => item.id;
 
-const ContactList = () => (
+const ContactList = ({contacts, navigation}) => (
   <View style={styles.container}>
     <FilterAddBar/>
     <FlatList
       data={contacts}
-      renderItem={createContact}
+      renderItem={createContact(navigation)}
       keyExtractor={contactListKeyExtractor}
     />
   </View>
 )
 
-export default ContactList;
+const mapStateToProps = (store) => ({
+  contacts: store.user.contacts
+})
+
+export default connect(mapStateToProps)(ContactList);

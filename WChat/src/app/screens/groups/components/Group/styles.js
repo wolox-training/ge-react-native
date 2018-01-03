@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   groupContainer: {
     flex: 1,
     flexDirection: 'row',
-    height: 30,
+    height: 40,
     paddingRight: 10,
     paddingLeft: 10,
     paddingBottom: 5,
@@ -20,7 +20,12 @@ const styles = StyleSheet.create({
   },
   groupName: {
     fontWeight: 'bold',
+    marginBottom: 5,
     color: SOFT_BLACK,
+  },
+  groupLastMessage: {
+    color: LIGHT_GREY,
+    marginBottom: 5,
   },
 });
 

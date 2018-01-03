@@ -4,7 +4,6 @@ const styles = StyleSheet.create({
   filterAddBarContainer: {
     flexDirection: 'row',
     marginBottom: 10,
-    height: 40,
   },
   filterSearchIcon: {
     flex: 1, 
