@@ -5,7 +5,6 @@ import ContactList from '../../screens/contactList';
 import Chats from '../../screens/chats';
 import Groups from '../../screens/groups';
 import Chat from '../../screens/chat';
-import GroupChat from '../../screens/groupChat';
 
 
 
@@ -61,15 +60,9 @@ const RootStack = StackNavigator({
   Chat: {
     screen: Chat,
     navigationOptions: ({navigation}) => ({
-      title: navigation.state.params.contact.username
+      title: navigation.state.params.contact? navigation.state.params.contact.username : navigation.state.params.group.name
     })
   },
-  GroupChat: {
-    screen: GroupChat,
-    navigationOptions: ({navigation}) => ({
-      title: navigation.state.params.group.name
-    })
-  }
 })
 
 export default RootStack;

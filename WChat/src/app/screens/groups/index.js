@@ -14,7 +14,7 @@ import styles from './styles'
 const createGroup = (navigation) => ({item}) => 
   <TouchableOpacity 
     onPress={() => {
-      navigation.navigate('GroupChat', {group: item})}}>
+      navigation.navigate('Chat', {group: item})}}>
     <Group group={item}/>
   </TouchableOpacity>
 

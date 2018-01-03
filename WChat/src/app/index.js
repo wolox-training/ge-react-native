@@ -17,7 +17,7 @@ class App extends Component {
   render(){
     return (
       <View style={styles.container}>
-        <RootNavigator screenProps={{user: this.props.user, appLoading: this.props.appLoading}}/>
+        <RootNavigator />
       </View>
     );
   }

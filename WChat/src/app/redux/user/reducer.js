@@ -1,5 +1,6 @@
 import Immutable from 'seamless-immutable';
-import actionTypes from '../actionTypes';
+import actionTypes from './actionTypes';
+import { cloneAndInsertInArray } from '../../../utils/arrayUtils';
 
 const initialState = {
   contacts: [],
@@ -44,12 +45,8 @@ const user = (state = initialState, action) => {
         chats: action.chats,
         lastChat: action.chats.reduce((latest, current) => latest.createdAt > current.createdAt ? latest : current)
       }
-
-      let newContacts = state.contacts
-      .slice(0, oldContactIndex)
-      .concat(newContact)
-      .concat(state.contacts
-        .slice(oldContactIndex + 1, state.contacts.length + 1 ))
+      let newContacts = cloneAndInsertInArray(state.contacts, newContact, oldContactIndex)
+      
       return Immutable.merge(state, {
         contacts: newContacts
       })

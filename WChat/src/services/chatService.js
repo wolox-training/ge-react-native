@@ -1,11 +1,11 @@
 import * as api from '../config/api';
-import { MESSAGES_PATH, USERS_PATH, USER_PATH, GROUPS_PATH } from '../utils/constants';
+import { MESSAGES_PATH, USERS_PATH, USER_PATH, GROUPS_PATH, DEFAULT_USER } from '../utils/constants';
 
 export const getChats = (userId, receiverId) => {
     return api.get(`/${MESSAGES_PATH}?senderId=${userId}&receiverId=${receiverId}&senderId=${receiverId}&receiverId=${userId}`);
   }
 
-export const getUser = (username = 'woloxer') => {
+export const getUser = (username = DEFAULT_USER) => {
     return api.get(`/${USERS_PATH}?username=${username}`);
   }
 

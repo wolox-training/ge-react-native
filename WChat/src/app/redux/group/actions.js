@@ -1,5 +1,5 @@
 import * as ChatService from '../../../services/chatService';
-import actionTypes from '../actionTypes';
+import actionTypes from './actionTypes';
 
 const groupActions = {
   getGroupsLoading(){
