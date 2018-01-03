@@ -1,12 +1,13 @@
 import React from 'react';
-import { TabNavigator, StackNavigator } from 'react-navigation'; // 1.0.0-beta.14
+import { TabNavigator, StackNavigator, HeaderBackButton } from 'react-navigation'; // 1.0.0-beta.14
+import { View, Image, Text, Platform } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'; // 4.4.2
 import ContactList from '../../screens/contactList';
 import Chats from '../../screens/chats';
 import Groups from '../../screens/groups';
 import Chat from '../../screens/chat';
-
-
+import styles from './styles';
+import { AndroidContactHeader, AndroidGroupHeader, IosContactHeader, IosGroupHeader } from './components/headers';
 
 const HomeTabs = TabNavigator({
   Chats: {
@@ -59,9 +60,19 @@ const RootStack = StackNavigator({
   },
   Chat: {
     screen: Chat,
-    navigationOptions: ({navigation}) => ({
-      title: navigation.state.params.contact? navigation.state.params.contact.username : navigation.state.params.group.name
-    })
+    navigationOptions: ({navigation}) => (
+      {
+        header: navigation.state.params.contact? 
+          Platform.OS === 'ios' ? 
+            <IosContactHeader goBack={ () => navigation.goBack(null) } contact={navigation.state.params.contact} /> 
+            :
+            <AndroidContactHeader goBack={ () => navigation.goBack(null) } contact={navigation.state.params.contact} />
+          : 
+          Platform.OS === 'ios' ?
+            <IosGroupHeader goBack={ () => navigation.goBack(null) } group={navigation.state.params.group} />
+            :
+            <AndroidGroupHeader goBack={ () => navigation.goBack(null) } group={navigation.state.params.group} />
+      })
   },
 })
 
