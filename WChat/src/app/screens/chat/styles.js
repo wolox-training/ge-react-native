@@ -1,31 +1,29 @@
 import { StyleSheet } from 'react-native';
-import { LIGHT_BLUE, LIGHT_GREY } from '../../../utils/colors';
+import { LIGHT_BLUE, LIGHT_GREY, LIGHTER_GREY } from '../../../utils/colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-end',
+  },
+  textInput: {
+    flex: .9,
+    bottom: 0,
+    height: 'auto',
+  },
+  inputContainer: {
+    flex:.15, 
     flexDirection: 'row',
+    backgroundColor: LIGHT_GREY,
   },
-  chatBodyMe: { 
-    textAlign: 'right',
-    paddingRight: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-    backgroundColor: LIGHT_BLUE, 
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: LIGHT_GREY,
+  sendButton: {
+    flex: .1,
+    alignSelf: 'center',
+    paddingLeft: 15 
   },
-  chatBodyHim: {
-    textAlign: 'left',
-    paddingLeft: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: LIGHT_GREY,
-  }
+  chatList: {
+    flex: .9,
+  },
 });
 
 export default styles;

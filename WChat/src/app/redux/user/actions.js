@@ -1,6 +1,7 @@
 import * as ChatService from '../../../services/chatService';
 import actionTypes from './actionTypes';
 import groupActions from '../group/actions';
+import Reactotron from 'reactotron-react-native';
 
 const userActions = {
   getUserFailure(message){
@@ -42,6 +43,19 @@ const userActions = {
       type: actionTypes.GET_CHATS_SUCCESS,
       receiverId,
       chats
+    }
+  },
+  sendMessageFailure(error){
+    return {
+      type: actionTypes.SEND_MESSAGE_FAILURE,
+      error
+    }
+  },
+  messageSent(message, receiverId){
+    return {
+      type:actionTypes.MESSAGE_SENT,
+      message,
+      receiverId
     }
   }
 }
@@ -96,6 +110,20 @@ const actionCreators = {
         } 
       } catch (e) {
         dispatch(userActions.getChatsFailure(e.message));
+      }
+    }
+  },
+  sendPrivateMessage(body, userId, receiverId) {
+    return async dispatch => {
+      try {
+        const response = await ChatService.sendPrivateMessage(body, userId, receiverId);
+        if(response.status === 201) {
+          dispatch(userActions.messageSent(response.data, receiverId));
+        } else {
+          dispatch(userActions.sendMessageFailure(response.failure));
+        }
+      } catch (e) {
+        dispatch(userActions.sendMessageFailure(e.message));
       }
     }
   }

@@ -20,3 +20,13 @@ export const getGroupMessages = (groupId) => {
 export const getContacts = (userId) => {
   return api.get(`/${USERS_PATH}`);
 }
+
+export const sendPrivateMessage = (body, userId, receiverId) => {
+  return api.post(`/${MESSAGES_PATH}`, 
+    {
+      body, 
+      senderId: userId, 
+      receiverId
+    }
+  )
+}
