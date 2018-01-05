@@ -6,7 +6,7 @@ import ContactList from '../../screens/contactList';
 import Chats from '../../screens/chats';
 import Groups from '../../screens/groups';
 import Chat from '../../screens/chat';
-import { AndroidHeader, IosHeader } from './components/headers';
+import Header from './components/Header';
 
 const HomeTabs = TabNavigator({
   Chats: {
@@ -62,15 +62,9 @@ const RootStack = StackNavigator({
     navigationOptions: ({navigation}) => (
       {
         header: navigation.state.params.contact? 
-          Platform.OS === 'ios' ? 
-            <IosHeader goBack={ () => navigation.goBack(null) } title={navigation.state.params.contact.username} avatar={navigation.state.params.contact.avatar} /> 
-            :
-            <AndroidHeader goBack={ () => navigation.goBack(null) } title={navigation.state.params.contact.username} avatar={navigation.state.params.contact.avatar} />
+            <Header goBack={ () => navigation.goBack(null) } title={navigation.state.params.contact.username} avatar={navigation.state.params.contact.avatar} /> 
           : 
-          Platform.OS === 'ios' ?
-            <IosHeader goBack={ () => navigation.goBack(null) } title={navigation.state.params.group.name} />
-            :
-            <AndroidHeader goBack={ () => navigation.goBack(null) } title={navigation.state.params.group.name} />
+            <Header goBack={ () => navigation.goBack(null) } title={navigation.state.params.group.name} />
       })
   },
 })
