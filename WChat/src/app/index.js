@@ -7,15 +7,6 @@ import RootNavigator from './components/RootNavigator';
 import { connect } from 'react-redux';
 import userActions from './redux/user/actions';
 
-  render(){
-    return (
-      <View style={styles.container}>
-        <RootNavigator screenProps={{user: this.props.user, appLoading: this.props.appLoading}}/>
-      </View>
-    );
-  }
-}
-
 class App extends Component {
 
   componentDidMount(){
