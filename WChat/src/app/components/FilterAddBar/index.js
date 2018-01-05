@@ -20,7 +20,7 @@ class FilterAddBar extends Component {
       <Ionicons style={this.state.filtering ? styles.hiddenNode : styles.filterSearchIcon} name="md-search" size={26} onPress={this.handleSearchButtonPress}/>
       <TextInput style={this.state.filtering ? styles.filterTextInput : styles.hiddenNode} value={this.state.filter} onChangeText={this.handleChangeText}/>
       <Text style={this.state.filtering ? styles.filterClose : styles.hiddenNode} onPress={this.handleCloseButtonPress}>&#10006;</Text>
-      <Ionicons style={this.state.filtering ? styles.hiddenNode : styles.filterAdd} name="md-add" size={26}/>
+      <Ionicons style={this.state.filtering ? styles.hiddenNode : styles.filterAdd} name="md-add" size={26} onPress={this.props.handleAdd}/>
     </View>
     );
   }

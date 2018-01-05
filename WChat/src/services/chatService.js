@@ -40,3 +40,11 @@ export const sendGroupMessage = (body, userId, groupId) => {
     }
   )
 }
+
+export const createNewContact = (username) => {
+  return api.post(`/${USERS_PATH}`,
+    {
+      username
+    }
+  );
+}
