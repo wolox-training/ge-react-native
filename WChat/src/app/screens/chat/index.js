@@ -12,7 +12,6 @@ import styles from './styles'
 import userActions from '../../redux/user/actions';
 import groupActions from '../../redux/group/actions';
 import Bubble from './components/Bubble';
-import Reactotron from 'reactotron-react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const renderChat = (userId, isGroup, contacts) => (
@@ -29,18 +28,17 @@ const chatKeyExtractor = (item) => item.id;
 
 class Chat extends Component {
   navParams = this.props.navigation.state.params;
-  state = {isGroup: false, text: '', receiverId: null}
+  state = {isGroup: false, text: '', receiverId: null};
+
   componentWillMount(){
     if(this.navParams.contact) {
       this.updateChats = () => (this.props.getChats(this.props.user.id, this.navParams.contact.id));
       const contactId = this.navParams.contact.id;
       this.setState({
-        chats: this.props.contacts.find((item) => item.id === contactId).chats, 
+        chats: this.props.contacts.find((item) => item.id === contactId).chats,
         receiverId: contactId
       });
-    }
-
-    if(this.navParams.group) {
+    } else if (this.navParams.group) {
       this.updateChats = () => (this.props.getGroupChats(this.navParams.group.id));
       const groupId = this.navParams.group.id;
       this.setState({
@@ -49,25 +47,35 @@ class Chat extends Component {
         receiverId: groupId
       });
     }
-
     this.updateChats(); 
+    this.poll = setInterval(this.updateChats, 5000)
   }
-  handleTextChange = (text) =>{
+  componentWillUnmount(){
+    clearInterval(this.poll);
+  }
+  handleTextChange = (text) => {
     this.setState({text});
   }
   handleSend = () => {
     if(this.state.text.length < 1)
       return;
-    this.props.sendPrivateMessage(this.state.text, this.props.user.id, this.state.receiverId);
+    if(this.state.isGroup)
+      this.props.sendGroupMessage(this.state.text, this.props.user.id, this.state.receiverId);
+    else
+      this.props.sendPrivateMessage(this.state.text, this.props.user.id, this.state.receiverId);
+
     this.setState({text: ''})
   }
   render(){
     const userId = this.props.user.id;
+    const currentChat = (this.state.isGroup? this.props.currentGroupChat : this.props.currentChat);
+
     return (
       <View style={styles.container}>
           <FlatList
+            inverted
             style={styles.chatList}
-            data={this.props.currentChat}
+            data={currentChat}
             renderItem={renderChat(userId, this.state.isGroup, this.props.contacts)}
             keyExtractor={chatKeyExtractor} 
             />
@@ -87,7 +95,8 @@ const mapStateToProps = (store) => ({
   user: store.user.user,
   contacts: store.user.contacts,
   groups: store.group.groups,
-  currentChat: store.user.currentChat
+  currentChat: store.user.currentChat,
+  currentGroupChat: store.group.currentGroupChat
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -101,7 +110,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(userActions.sendPrivateMessage(body, userId, receiverId))
   },
   sendGroupMessage: (body, userId, groupId) => {
-    dispatch(groupActions.sendGroupMessage(groupId))
+    dispatch(groupActions.sendGroupMessage(body, userId, groupId))
   }
 })
 

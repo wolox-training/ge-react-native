@@ -58,7 +58,7 @@ const user = (state = initialState, action) => {
       newContacts = cloneAndInsertInArray(state.contacts, newContact, oldContactIndex)
       return Immutable.merge(state, {
         contacts: newContacts,
-        currentChat: action.chats
+        currentChat: action.chats.reverse()
       })
     case actionTypes.SEND_MESSAGE_FAILURE:
       return Immutable.merge(state, {
@@ -76,7 +76,7 @@ const user = (state = initialState, action) => {
       newContacts = cloneAndInsertInArray(state.contacts, newContact, oldContactIndex);
       return Immutable.merge(state, {
         contacts: newContacts,
-        currentChat: newChats
+        currentChat: newChats.reverse()
       })
     default:
       return state;

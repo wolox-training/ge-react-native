@@ -30,3 +30,13 @@ export const sendPrivateMessage = (body, userId, receiverId) => {
     }
   )
 }
+
+export const sendGroupMessage = (body, userId, groupId) => {
+  return api.post(`/${MESSAGES_PATH}`, 
+    {
+      body, 
+      senderId: userId, 
+      groupId
+    }
+  )
+}
