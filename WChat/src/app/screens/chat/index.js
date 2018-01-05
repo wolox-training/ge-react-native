@@ -14,6 +14,7 @@ import userActions from '../../redux/user/actions';
 import groupActions from '../../redux/group/actions';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ChatsList from './components/ChatsList';
+import { BACKGROUND_IMAGE } from '../../../utils/constants'
 
 class Chat extends Component {
   navParams = this.props.navigation.state.params;
@@ -62,18 +63,10 @@ class Chat extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',}}>
+        <View style={styles.backImageContainer}>
           <Image
-            style={{
-              flex: 1,
-              resizeMode: 'stretch'
-            }}
-            source={{ uri: 'https://i.imgur.com/TnNwdvV.jpg' }}
+            style={styles.backImage}
+            source={{ uri: BACKGROUND_IMAGE }}
           />
         </View>
           <ChatsList userId={userId} isGroup={this.state.isGroup} contacts={this.props.contacts} chats={currentChat} />

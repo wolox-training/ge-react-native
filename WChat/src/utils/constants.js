@@ -5,3 +5,4 @@ export const USERS_PATH = 'users';
 export const USER_PATH = 'user';
 export const GROUPS_PATH = 'groups';
 export const DEFAULT_USER = 'woloxer';
+export const BACKGROUND_IMAGE = 'https://i.imgur.com/TnNwdvV.jpg';
