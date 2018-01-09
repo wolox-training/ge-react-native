@@ -7,7 +7,6 @@ import RootNavigator from './components/RootNavigator';
 import { connect } from 'react-redux';
 import userActions from './redux/user/actions';
 
-
 class App extends Component {
 
   componentDidMount(){

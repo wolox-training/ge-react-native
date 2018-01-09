@@ -1,41 +1,67 @@
 import Immutable from 'seamless-immutable';
 import actionTypes from './actionTypes';
-import { cloneAndInsertInArray } from '../../../utils/arrayUtils';
+import { cloneAndInsertInArray, updateElementInArray } from '../../../utils/arrayUtils';
 
 const initialState = {
   groups: [],
   groupsLoading: false,
+  currentGroupChat: []
 };
 
-const group = (state = initialState, action) => {
+const group = (state = Immutable(initialState), action) => {
   switch (action.type){
     case actionTypes.GET_GROUPS_SUCCESS:
-      return Immutable.merge(state, {
+      return state.merge({
         groups: action.groups,
         groupsLoading: false
       });
     case actionTypes.GET_GROUPS_LOADING:
-      return Immutable.merge(state, {
+      return state.merge({
         groupsLoading: true
       });
     case actionTypes.GET_GROUPS_FAILURE:
-      return Immutable.merge(state, {
+      return state.merge({
         groupsLoading: false,
         groupsError: action.error
       });
-    case actionTypes.GET_GROUP_CHAT_SUCCESS:
-      const oldGroupIndex = state.groups.findIndex((group) => group.id === action.groupId);
-      const oldGroup = state.groups[oldGroupIndex];
-      let newGroup =  {
-        ...oldGroup,
-        chats: action.chats,
-        lastChat: action.chats.reduce((latest, current) => latest.createdAt > current.createdAt ? latest : current)
+    case actionTypes.GET_GROUP_CHAT_SUCCESS:      
+      if(!action.chats.length){
+        return state.merge({
+          currentGroupChat: []
+        })
       }
+      return state.merge({
+        groups: updateElementInArray(
+          state.groups, 
+          {
+            chats: action.chats, 
+            lastChat: action.chats.reduce((latest, current) => latest.createdAt > current.createdAt ? latest : current)
+          }, 
+          action.groupId),
+        currentGroupChat: action.chats.reverse()
+      })
+    case actionTypes.SEND_GROUP_MESSAGE_FAILURE:
+      return state.merge({
+        error: action.error
+      })
+    case actionTypes.GROUP_MESSAGE_SENT:
+      const oldGroup = state.groups.find((group) => group.id === action.groupId);
 
+      if(!oldGroup)
+        return state;
 
-      let newGroups = cloneAndInsertInArray(state.groups, newGroup, oldGroupIndex)
-      return Immutable.merge(state, {
-        groups: newGroups
+      const newChats = [...oldGroup.chats, action.message];
+      
+      return state.merge({
+        groups: updateElementInArray(
+          state.groups, 
+          {
+            chats: newChats, 
+            lastChat: action.message
+          }, 
+          action.groupId
+          ),
+        currentGroupChat: newChats.reverse()
       })
     default:
       return state;

@@ -25,6 +25,19 @@ const groupActions = {
       groupId,
       chats
     }
+  },
+  sendGroupMessageFailure(error){
+    return {
+      type: actionTypes.SEND_GROUP_MESSAGE_FAILURE,
+      error
+    }
+  },
+  groupMessageSent(message, groupId){
+    return {
+      type:actionTypes.GROUP_MESSAGE_SENT,
+      message,
+      groupId
+    }
   }
 }
 
@@ -58,6 +71,20 @@ const actionCreators = {
       }catch (e) {
         dispatch(groupActions.getGroupsFailure(e.message));
       }  
+    }
+  },
+  sendGroupMessage(body, userId, groupId) {
+    return async dispatch => {
+      try {
+        const response = await ChatService.sendGroupMessage(body, userId, groupId);
+        if(response.status === 201 || response.status === 200) {
+          dispatch(groupActions.groupMessageSent(response.data, groupId));
+        } else {
+          dispatch(groupActions.sendGroupMessageFailure(response.failure));
+        }
+      } catch (e) {
+        dispatch(groupActions.sendGroupMessageFailure(e.message));
+      }
     }
   }
 }
