@@ -10,14 +10,12 @@ import styles from './styles'
 import FilterAddBar from '../../components/FilterAddBar';
 
 const createContact = (navigation, userId) => ({item}) => 
-  item.id !== userId ?
+  item.id !== userId &&
     <TouchableOpacity 
       onPress={() => {
         navigation.navigate('Chat', {contact: item})}}>
       <Contact contact={item} />
-    </TouchableOpacity> 
-  : 
-    null;
+    </TouchableOpacity> ;
 
 const contactListKeyExtractor = (item) => item.id;
 

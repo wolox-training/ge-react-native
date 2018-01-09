@@ -1,6 +1,5 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { LIGHT_BLUE, LIGHT_GREY, LIGHTER_GREY } from '../../../utils/colors';
-
 
 const styles = StyleSheet.create({
   container: {

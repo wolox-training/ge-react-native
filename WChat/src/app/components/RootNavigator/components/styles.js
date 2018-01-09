@@ -1,6 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { GREY } from '../../../utils/colors';
-import { isIos } from '../../../config/platform';
+import { GREY } from '../../../../utils/colors';
+import { isIos } from '../../../../config/platform';
+
+
 
 const styles = StyleSheet.create({
   header: {
