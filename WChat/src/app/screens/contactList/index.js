@@ -9,21 +9,17 @@ import { connect } from 'react-redux';
 import styles from './styles'
 import FilterAddBar from '../../components/FilterAddBar';
 
-
 const createContact = (navigation, userId) => ({item}) => 
-  item.id !== userId ?
+  item.id !== userId &&
     <TouchableOpacity 
       onPress={() => {
         navigation.navigate('Chat', {contact: item})}}>
       <Contact contact={item} />
-    </TouchableOpacity> 
-  : 
-    null;
+    </TouchableOpacity> ;
 
 const contactListKeyExtractor = (item) => item.id;
 
-const ContactList = ({contacts, navigation, user}) => {
-  return (
+const ContactList = ({contacts, navigation, user}) => (
   <View style={styles.container}>
     <FilterAddBar handleAdd={() => {navigation.navigate('AddNew', {isGroup: false})}}/>
     <FlatList
@@ -32,7 +28,7 @@ const ContactList = ({contacts, navigation, user}) => {
       keyExtractor={contactListKeyExtractor}
     />
   </View>
-)}
+)
 
 const mapStateToProps = (store) => ({
   user: store.user.user,

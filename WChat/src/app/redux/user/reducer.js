@@ -1,6 +1,7 @@
 import Immutable from 'seamless-immutable';
 import actionTypes from './actionTypes';
-import { cloneAndInsertInArray } from '../../../utils/arrayUtils';
+import { cloneAndInsertInArray, updateElementInArray } from '../../../utils/arrayUtils';
+import Reactotron from 'reactotron-react-native';
 
 const initialState = {
   contacts: [],
@@ -10,74 +11,74 @@ const initialState = {
   currentChat: []
 };
 
-const user = (state = initialState, action) => {
-  let oldContact;
-  let oldContactIndex;
-  let newContact;
-  let newContacts;
+const user = (state = Immutable(initialState), action) => {
   switch (action.type){
     case actionTypes.GET_USER_SUCCESS:
-      return Immutable.merge(state, {
+      return state.merge({
         user: action.user
       });
     case actionTypes.GET_USER_FAILURE:
-      return Immutable.merge(state, {
+      return state.merge({
         userError: action.message
       });
     case actionTypes.APP_LOADING:
-      return Immutable.merge(state, {
+      return state.merge({
         appLoading: true
       });
     case actionTypes.GET_CONTACTS_SUCCESS:
-      return Immutable.merge(state, {
+      return state.merge({
         contacts: action.contacts,
         appLoading: false
       })
     case actionTypes.GET_CHATS_LOADING:
-      return Immutable.merge(state, {
+      return state.merge({
         chatsLoading: true
       })
     case actionTypes.GET_CHATS_FAILURE:
-      return Immutable.merge(state, {
+      return state.merge({
         error: action.error,
         chatsLoading: false
       })
     case actionTypes.GET_CHATS_SUCCESS:
       if(!action.chats.length){
-        return Immutable.merge(state, {
+        return state.merge({
           currentChat: []
         })
       }
-      oldContactIndex = state.contacts.findIndex((contact) => contact.id === action.receiverId);
-      oldContact = state.contacts[oldContactIndex];
-      newContact =  {
-        ...oldContact,
-        chats: action.chats,
-        lastChat: action.chats.reduce((latest, current) => latest.createdAt > current.createdAt ? latest : current)
-      }
-      newContacts = cloneAndInsertInArray(state.contacts, newContact, oldContactIndex)
-      return Immutable.merge(state, {
-        contacts: newContacts,
+      return state.merge({
+        contacts: updateElementInArray(
+          state.contacts, 
+          {
+            chats: action.chats, 
+            lastChat: action.chats.reduce((latest, current) => latest.createdAt > current.createdAt ? latest : current)
+          }, 
+          action.receiverId
+          ),
         currentChat: action.chats.reverse()
       })
     case actionTypes.SEND_MESSAGE_FAILURE:
-      return Immutable.merge(state, {
+      return state.merge({
         error: action.error
       })
     case actionTypes.MESSAGE_SENT:
-      oldContactIndex = state.contacts.findIndex((contact) => contact.id === action.receiverId);
-      oldContact = state.contacts[oldContactIndex];
-      newChats = [...oldContact.chats, action.message];
-      newContact = {
-        ...oldContact,
-        chats: newChats,
-        lastChat: action.message
-      }
-      newContacts = cloneAndInsertInArray(state.contacts, newContact, oldContactIndex);
-      return Immutable.merge(state, {
-        contacts: newContacts,
+      const oldContact = state.contacts.find((contact) => contact.id === action.receiverId);
+      const newChats = [...oldContact.chats, action.message];
+      return state.merge({
+        contacts: updateElementInArray(
+          state.contacts, 
+          {
+            chats: newChats, 
+            lastChat: action.message
+          }, 
+          action.receiverId
+          ),
         currentChat: newChats.reverse()
       })
+    case actionTypes.USER_CREATED:
+      const contactsWithNewUser = state.contacts.slice().concat(action.user);
+      return state.merge({
+        contacts: contactsWithNewUser
+      });
     default:
       return state;
   };

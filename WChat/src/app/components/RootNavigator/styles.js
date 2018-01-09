@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { GREY } from '../../../utils/colors';
-import { Platform } from 'react-native'
+import { isIos } from '../../../config/platform';
 
 const styles = StyleSheet.create({
   header: {
@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   headerTitle: {
-    fontSize: Platform.OS === 'ios' ? 17 : 18,
-    fontWeight: Platform.OS === 'ios' ? '600' : '500',
+    fontSize: isIos ? 17 : 18,
+    fontWeight: isIos ? '600' : '500',
     color: 'rgba(0, 0, 0, .9)',
-    textAlign: Platform.OS === 'ios' ? 'center' : 'left',
+    textAlign: isIos ? 'center' : 'left',
     marginHorizontal: 16,
     alignSelf: 'center'
   },

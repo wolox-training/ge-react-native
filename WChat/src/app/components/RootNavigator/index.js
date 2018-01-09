@@ -1,6 +1,6 @@
 import React from 'react';
 import { TabNavigator, StackNavigator, HeaderBackButton } from 'react-navigation'; // 1.0.0-beta.14
-import { View, Image, Text, Platform } from 'react-native';
+import { View, Image, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'; // 4.4.2
 import ContactList from '../../screens/contactList';
 import Chats from '../../screens/chats';
@@ -63,9 +63,9 @@ const RootStack = StackNavigator({
     navigationOptions: ({navigation}) => (
       {
         header: navigation.state.params.contact? 
-            <Header goBack={ () => navigation.goBack(null) } title={navigation.state.params.contact.username} avatar={navigation.state.params.contact.avatar} /> 
+            <Header goBack={ () => navigation.goBack() } title={navigation.state.params.contact.username} avatar={navigation.state.params.contact.avatar} /> 
           : 
-            <Header goBack={ () => navigation.goBack(null) } title={navigation.state.params.group.name} />
+            <Header goBack={ () => navigation.goBack() } title={navigation.state.params.group.name} />
       })
   },
   AddNew: {
