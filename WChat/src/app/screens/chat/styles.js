@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
   },
   backImage: {
     flex: 1,
-    resizeMode: 'stretch'
   }
 });
 

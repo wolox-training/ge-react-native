@@ -6,7 +6,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
-  Image
+  ImageBackground
 } from 'react-native'; 
 import { connect } from 'react-redux';
 import styles from './styles'
@@ -14,7 +14,7 @@ import userActions from '../../redux/user/actions';
 import groupActions from '../../redux/group/actions';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ChatsList from './components/ChatsList';
-import { BACKGROUND_IMAGE } from '../../../utils/constants'
+import backgroundImage from '../../../../assets/chatBackground.jpg';
 
 class Chat extends Component {
   navParams = this.props.navigation.state.params;
@@ -62,13 +62,10 @@ class Chat extends Component {
     const currentChat = (this.state.isGroup? this.props.currentGroupChat : this.props.currentChat);
 
     return (
-      <View style={styles.container}>
-        <View style={styles.backImageContainer}>
-          <Image
-            style={styles.backImage}
-            source={{ uri: BACKGROUND_IMAGE }}
-          />
-        </View>
+        <ImageBackground
+          style={styles.backImage}
+          source={backgroundImage}
+         >
           <ChatsList userId={userId} isGroup={this.state.isGroup} contacts={this.props.contacts} chats={currentChat} />
           <View style={styles.inputContainer}>
             <TextInput style={styles.textInput} value={this.state.text} onChangeText={this.handleTextChange}/>
@@ -77,7 +74,7 @@ class Chat extends Component {
               <Icon name="md-arrow-forward" size={30}/>
             </TouchableOpacity>
           </View>
-      </View>
+        </ImageBackground>
     )
   }
 }

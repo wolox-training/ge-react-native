@@ -6,11 +6,11 @@ import styles from './styles';
 const Header = ({goBack, title, avatar}) => (
   <View style={styles.header}>
     <HeaderBackButton onPress={goBack} />
-    {avatar?
+    {avatar &&
       <Image
       style={styles.headerAvatar}
       source={{uri: avatar}}
-      /> : null}
+      />}
     <Text style={styles.headerTitle}>{title}</Text>
   </View> )
 export default Header;
