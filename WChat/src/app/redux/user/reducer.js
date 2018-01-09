@@ -1,7 +1,6 @@
 import Immutable from 'seamless-immutable';
 import actionTypes from './actionTypes';
 import { cloneAndInsertInArray, updateElementInArray } from '../../../utils/arrayUtils';
-import Reactotron from 'reactotron-react-native';
 
 const initialState = {
   contacts: [],

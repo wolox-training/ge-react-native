@@ -142,7 +142,7 @@ const actionCreators = {
     return async dispatch => {
       try {
         const response = await ChatService.createNewContact(username);
-        if(response.status === 201) {
+        if(response.status === 201 || response.status === 200) {
           dispatch(userActions.userCreated(response.data));
         } else {
           dispatch(userActions.userCreateFailed());

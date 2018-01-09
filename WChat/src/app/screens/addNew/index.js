@@ -5,7 +5,7 @@ import styles from './styles';
 import { connect } from 'react-redux';
 import userActions from '../../redux/user/actions';
 
-const ADD_PLACEHOLDER = 'Nombre:'
+const ADD_LABEL = 'Nombre:'
 
 class AddNew extends Component {
   state = {
@@ -32,7 +32,7 @@ class AddNew extends Component {
     return (
       <View>
         <View style={styles.addContainer}>
-          <Text style={styles.label}>{ADD_PLACEHOLDER}</Text>
+          <Text style={styles.label}>{ADD_LABEL}</Text>
           <TextInput style={styles.input} onChangeText={this.handleTextChange} />
           <Icon name="md-add" size={30} style={styles.addIcon} onPress={this.handleCreate} />
         </View>
