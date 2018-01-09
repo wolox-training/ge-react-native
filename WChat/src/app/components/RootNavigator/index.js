@@ -62,9 +62,9 @@ const RootStack = StackNavigator({
     navigationOptions: ({navigation}) => (
       {
         header: navigation.state.params.contact? 
-            <Header goBack={ () => navigation.goBack(null) } title={navigation.state.params.contact.username} avatar={navigation.state.params.contact.avatar} /> 
+            <Header goBack={ () => navigation.goBack() } title={navigation.state.params.contact.username} avatar={navigation.state.params.contact.avatar} /> 
           : 
-            <Header goBack={ () => navigation.goBack(null) } title={navigation.state.params.group.name} />
+            <Header goBack={ () => navigation.goBack() } title={navigation.state.params.group.name} />
       })
   },
 })

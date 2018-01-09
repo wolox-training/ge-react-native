@@ -1,7 +1,6 @@
 import * as ChatService from '../../../services/chatService';
 import actionTypes from './actionTypes';
 import groupActions from '../group/actions';
-import Reactotron from 'reactotron-react-native';
 
 const userActions = {
   getUserFailure(message){
