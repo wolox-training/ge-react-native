@@ -77,7 +77,7 @@ const actionCreators = {
     return async dispatch => {
       try {
         const response = await ChatService.sendGroupMessage(body, userId, groupId);
-        if(response.status === 201) {
+        if(response.status === 201 || response.status === 200) {
           dispatch(groupActions.groupMessageSent(response.data, groupId));
         } else {
           dispatch(groupActions.sendGroupMessageFailure(response.failure));

@@ -1,7 +1,6 @@
 import * as ChatService from '../../../services/chatService';
 import actionTypes from './actionTypes';
 import groupActions from '../group/actions';
-import Reactotron from 'reactotron-react-native';
 
 const userActions = {
   getUserFailure(message){
@@ -117,7 +116,7 @@ const actionCreators = {
     return async dispatch => {
       try {
         const response = await ChatService.sendPrivateMessage(body, userId, receiverId);
-        if(response.status === 201) {
+        if(response.status === 201 || response.status === 200) {
           dispatch(userActions.messageSent(response.data, receiverId));
         } else {
           dispatch(userActions.sendMessageFailure(response.failure));

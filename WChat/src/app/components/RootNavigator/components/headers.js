@@ -6,21 +6,21 @@ import styles from './styles';
 export const IosHeader = ({goBack, title, avatar}) => (
   <View style={styles.header}>
     <HeaderBackButton onPress={goBack} />
-    {avatar?
+    {avatar &&
       <Image
       style={styles.headerAvatar}
       source={{uri: avatar}}
-      /> : null}
+      />}
     <Text style={styles.headerTitle}>{title}</Text>
   </View> )
 
 export const AndroidHeader = ({goBack, title, avatar}) => (
   <View style={styles.header}>
     <HeaderBackButton onPress={goBack} />
-    {avatar?
+    {avatar &&
       <Image
       style={styles.headerAvatar}
       source={{uri: avatar}}
-    /> : null}
+    />}
     <Text style={styles.headerTitle}>{title}</Text>
   </View> )
