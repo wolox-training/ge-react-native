@@ -9,11 +9,6 @@ const initialState = {
 };
 
 const group = (state = Immutable(initialState), action) => {
-  let oldGroupIndex;
-  let oldGroup;
-  let newGroup;
-  let newGroups;
-
   switch (action.type){
     case actionTypes.GET_GROUPS_SUCCESS:
       return state.merge({
