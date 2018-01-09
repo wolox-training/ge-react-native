@@ -5,26 +5,16 @@ import {
   Text,
   TextInput,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  ImageBackground
 } from 'react-native'; 
 import { connect } from 'react-redux';
 import styles from './styles'
 import userActions from '../../redux/user/actions';
 import groupActions from '../../redux/group/actions';
-import Bubble from './components/Bubble';
 import Icon from 'react-native-vector-icons/Ionicons';
-
-const renderChat = (userId, isGroup, contacts) => (
-   ({item}) => {
-    let senderName = null;
-    if(isGroup){
-      senderName = contacts.find((contact) => contact.id === item.senderId).username;
-    }
-    return <Bubble mine={parseInt(item.senderId) === parseInt(userId)} body={item.body} date={item.createdAt} sender={senderName} />;
-  }
-)
-
-const chatKeyExtractor = (item) => item.id;
+import ChatsList from './components/ChatsList';
+import backgroundImage from '../../../../assets/chatBackground.jpg';
 
 class Chat extends Component {
   navParams = this.props.navigation.state.params;
@@ -50,12 +40,15 @@ class Chat extends Component {
     this.updateChats(); 
     this.poll = setInterval(this.updateChats, 5000)
   }
+  
   componentWillUnmount(){
     clearInterval(this.poll);
   }
+
   handleTextChange = (text) => {
     this.setState({text});
   }
+
   handleSend = () => {
     if(this.state.text.length < 1)
       return;
@@ -71,22 +64,19 @@ class Chat extends Component {
     const currentChat = (this.state.isGroup? this.props.currentGroupChat : this.props.currentChat);
 
     return (
-      <View style={styles.container}>
-          <FlatList
-            inverted
-            style={styles.chatList}
-            data={currentChat}
-            renderItem={renderChat(userId, this.state.isGroup, this.props.contacts)}
-            keyExtractor={chatKeyExtractor} 
-            />
-        <View style={styles.inputContainer}>
-          <TextInput style={styles.textInput} value={this.state.text} onChangeText={this.handleTextChange}/>
-          <TouchableOpacity style={styles.sendButton}
-            onPress={this.handleSend}>
-            <Icon name="md-arrow-forward" size={30}/>
-          </TouchableOpacity>
-        </View>
-      </View>
+        <ImageBackground
+          style={styles.backImage}
+          source={backgroundImage}
+         >
+          <ChatsList userId={userId} isGroup={this.state.isGroup} contacts={this.props.contacts} chats={currentChat} />
+          <View style={styles.inputContainer}>
+            <TextInput style={styles.textInput} value={this.state.text} onChangeText={this.handleTextChange}/>
+            <TouchableOpacity style={styles.sendButton}
+              onPress={this.handleSend}>
+              <Icon name="md-arrow-forward" size={30}/>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
     )
   }
 }

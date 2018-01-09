@@ -4,7 +4,7 @@ import styles from './styles';
 
 const Bubble= ({body, mine, date, sender}) => 
   <View style={mine ? styles.chatBodyMe : styles.chatBodyHim}>
-    {sender && <Text style={styles.sender}> {sender} </Text>}
+    {!mine && sender && <Text style={styles.sender}> {sender} </Text>}
     <Text style={styles.body}> {body} </Text>
     <Text style={styles.date}> {(new Date(date)).toLocaleString([], {hour: '2-digit', minute:'2-digit'})} </Text>
   </View>
