@@ -40,12 +40,15 @@ class Chat extends Component {
     this.updateChats(); 
     this.poll = setInterval(this.updateChats, 5000)
   }
+
   componentWillUnmount(){
     clearInterval(this.poll);
   }
+  
   handleTextChange = (text) => {
     this.setState({text});
   }
+
   handleSend = () => {
     if(this.state.text.length < 1)
       return;

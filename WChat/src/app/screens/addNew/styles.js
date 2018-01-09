@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { LIGHT_BLUE } from '../../../utils/colors';
+import { LIGHT_BLUE, RED } from '../../../utils/colors';
 
 const styles = StyleSheet.create({
   addContainer: {
@@ -23,6 +23,11 @@ const styles = StyleSheet.create({
   addIcon: {
     width: '5%',
     alignSelf: 'center'
+  },
+  error: {
+    color: RED,
+    textAlign: 'center',
+
   }
 });
 
