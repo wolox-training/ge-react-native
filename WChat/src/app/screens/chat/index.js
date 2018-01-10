@@ -16,15 +16,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import ChatsList from './components/ChatsList';
 import backgroundImage from '../../../../assets/chatBackground.jpg';
 
-const PAGE_SIZE = 50;
-
 class Chat extends Component {
   navParams = this.props.navigation.state.params;
   state = {
     isGroup: false, 
     text: '', 
-    receiverId: null,
-    pages: 1
+    receiverId: null
   };
 
   componentWillMount(){
@@ -74,7 +71,7 @@ class Chat extends Component {
 
   render(){
     const userId = this.props.user.id;
-    const currentChat = (this.state.isGroup? this.props.currentGroupChat : this.props.currentChat)
+    const currentChat = (this.state.isGroup? this.props.currentGroupChat : this.props.currentChat);
 
     return (
         <ImageBackground
