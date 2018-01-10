@@ -1,11 +1,16 @@
 import Immutable from 'seamless-immutable';
 import actionTypes from './actionTypes';
 import { cloneAndInsertInArray, updateElementInArray } from '../../../utils/arrayUtils';
+import { GROUPS_PAGE_SIZE, CHAT_PAGE_SIZE } from '../../../utils/constants';
 
 const initialState = {
   groups: [],
+  groupsPage: 1,
+  groupsShowing: [],
   groupsLoading: false,
-  currentGroupChat: []
+  currentGroupChat: [],
+  currentGroupChatShowing: [],
+  chatPage: 1,
 };
 
 const group = (state = Immutable(initialState), action) => {
@@ -13,7 +18,8 @@ const group = (state = Immutable(initialState), action) => {
     case actionTypes.GET_GROUPS_SUCCESS:
       return state.merge({
         groups: action.groups,
-        groupsLoading: false
+        groupsLoading: false,
+        groupsShowing: action.groups.slice(0, state.groupsPage * GROUPS_PAGE_SIZE)
       });
     case actionTypes.GET_GROUPS_LOADING:
       return state.merge({
@@ -27,7 +33,8 @@ const group = (state = Immutable(initialState), action) => {
     case actionTypes.GET_GROUP_CHAT_SUCCESS:      
       if(!action.chats.length){
         return state.merge({
-          currentGroupChat: []
+          currentGroupChat: [],
+          currentGroupChatShowing: []
         })
       }
       return state.merge({
@@ -38,7 +45,8 @@ const group = (state = Immutable(initialState), action) => {
             lastChat: action.chats.reduce((latest, current) => latest.createdAt > current.createdAt ? latest : current)
           }, 
           action.groupId),
-        currentGroupChat: action.chats.reverse()
+        currentGroupChat: action.chats,
+        currentGroupChatShowing: action.chats.reverse().slice(0, state.chatPage * CHAT_PAGE_SIZE),
       })
     case actionTypes.SEND_GROUP_MESSAGE_FAILURE:
       return state.merge({
@@ -61,7 +69,24 @@ const group = (state = Immutable(initialState), action) => {
           }, 
           action.groupId
           ),
-        currentGroupChat: newChats.reverse()
+        currentGroupChat: newChats.reverse(),
+        currentGroupChatShowing: newChats.slice(0, (state.chatPage * CHAT_PAGE_SIZE))
+      })
+    case actionTypes.LOAD_MORE_GROUPS:
+      if(state.contactsShowing.length < (state.contactsPage * CONTACTS_PAGE_SIZE))
+        return state;
+      const newContactPage = state.contactsPage + 1;
+      return state.merge({
+        contactsPage: newContactPage,
+        contactsShowing: state.contacts.slice(0, (newContactPage * CONTACTS_PAGE_SIZE)),
+      })
+    case actionTypes.LOAD_MORE_GROUP_CHAT:
+       if(state.currentGroupChatShowing.length < (state.chatPage * CHAT_PAGE_SIZE))
+        return state;
+      const newChatPage = state.chatPage + 1;
+      return state.merge({
+        chatPage: newChatPage,
+        currentGroupChatShowing: state.currentGroupChat.slice(0, (newChatPage * CHAT_PAGE_SIZE))
       })
     default:
       return state;

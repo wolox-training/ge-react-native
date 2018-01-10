@@ -38,6 +38,11 @@ const groupActions = {
       message,
       groupId
     }
+  },
+  loadMoreChat(){
+    return {
+      type: actionTypes.LOAD_MORE_GROUP_CHAT
+    }
   }
 }
 
@@ -86,6 +91,9 @@ const actionCreators = {
         dispatch(groupActions.sendGroupMessageFailure(e.message));
       }
     }
+  },
+  loadMoreChat() {
+    return groupActions.loadMoreChat();
   }
 }
 

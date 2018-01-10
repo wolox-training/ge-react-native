@@ -15,13 +15,15 @@ const renderChat = (userId, isGroup, contacts) => (
 
 const chatKeyExtractor = (item) => item.id;
 
-const ChatsList = ({userId, isGroup, contacts, chats}) => 
+const ChatsList = ({userId, isGroup, contacts, chats, handleLoadMore}) => 
   <FlatList
     inverted
     style={styles.chatList}
     data={chats}
     renderItem={renderChat(userId, isGroup, contacts)}
     keyExtractor={chatKeyExtractor} 
+    onEndReached={handleLoadMore}
+    onEndReachedThreshold={.5}
     />
 
 export default ChatsList;

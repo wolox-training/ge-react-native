@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux'
 import styles from './styles'
+import groupActions from '../../redux/group/actions';
 
 const createGroup = (navigation) => ({item}) => 
   <TouchableOpacity 
@@ -20,13 +21,15 @@ const createGroup = (navigation) => ({item}) =>
 
 const groupListKeyExtractor = (item) => item.id;
 
-const GroupList = ({groups, groupsLoading, navigation}) => (
+const GroupList = ({groups, groupsLoading, navigation, loadMore}) => (
   <View style={styles.container}>
     <FilterAddBar/>
     <FlatList
       data={groups}
       renderItem={createGroup(navigation)}
       keyExtractor={groupListKeyExtractor}
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.5}
     />
   </View>
 )
@@ -36,4 +39,10 @@ const mapStateToProps = (store) => ({
   groupsLoading: store.group.groupsLoading
 })
 
-export default connect(mapStateToProps)(GroupList);
+const mapDispatchToProps = (dispatch) => ({
+  loadMore: () => {
+    dispatch(groupActions.loadMoreChat());
+  }
+}) 
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupList);
