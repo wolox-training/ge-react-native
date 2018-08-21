@@ -1,13 +1,18 @@
 import Immutable from 'seamless-immutable';
 import actionTypes from './actionTypes';
 import { cloneAndInsertInArray, updateElementInArray } from '../../../utils/arrayUtils';
+import { CONTACTS_PAGE_SIZE, CHAT_PAGE_SIZE } from '../../../utils/constants';
 
 const initialState = {
   contacts: [],
+  contactsPage: 1,
   username: 'woloxer',
   user: {},
   appLoading: false,
-  currentChat: []
+  chatPage: 1,
+  currentChat: [],
+  currentChatShowing: [],
+  contactsShowing: []
 };
 
 const user = (state = Immutable(initialState), action) => {
@@ -27,7 +32,8 @@ const user = (state = Immutable(initialState), action) => {
     case actionTypes.GET_CONTACTS_SUCCESS:
       return state.merge({
         contacts: action.contacts,
-        appLoading: false
+        appLoading: false,
+        contactsShowing: action.contacts.slice(0, state.contactsPage * CONTACTS_PAGE_SIZE)
       })
     case actionTypes.GET_CHATS_LOADING:
       return state.merge({
@@ -44,16 +50,19 @@ const user = (state = Immutable(initialState), action) => {
           currentChat: []
         })
       }
-      return state.merge({
-        contacts: updateElementInArray(
+      const newContacts = updateElementInArray(
           state.contacts, 
           {
             chats: action.chats, 
             lastChat: action.chats.reduce((latest, current) => latest.createdAt > current.createdAt ? latest : current)
           }, 
           action.receiverId
-          ),
-        currentChat: action.chats.reverse()
+          );
+      return state.merge({
+        contacts: newContacts,
+        contactsShowing: newContacts.slice(0, state.contactsPage * CONTACTS_PAGE_SIZE),
+        currentChat: action.chats,
+        currentChatShowing: action.chats.reverse().slice(0, state.chatPage * CHAT_PAGE_SIZE),
       })
     case actionTypes.SEND_MESSAGE_FAILURE:
       return state.merge({
@@ -61,7 +70,7 @@ const user = (state = Immutable(initialState), action) => {
       })
     case actionTypes.MESSAGE_SENT:
       const oldContact = state.contacts.find((contact) => contact.id === action.receiverId);
-      const newChats = [...oldContact.chats, action.message];
+      const newChats = [ ...oldContact.chats, action.message];
       return state.merge({
         contacts: updateElementInArray(
           state.contacts, 
@@ -71,13 +80,30 @@ const user = (state = Immutable(initialState), action) => {
           }, 
           action.receiverId
           ),
-        currentChat: newChats.reverse()
+        currentChat: newChats.reverse(),
+        currentChatShowing: newChats.slice(0, (state.chatPage * CHAT_PAGE_SIZE))
       })
     case actionTypes.USER_CREATED:
       const contactsWithNewUser = state.contacts.slice().concat(action.user);
       return state.merge({
         contacts: contactsWithNewUser
       });
+    case actionTypes.LOAD_MORE_CONTACTS:
+      if(state.contactsShowing.length < (state.contactsPage * CONTACTS_PAGE_SIZE))
+        return state;
+      const newContactPage = state.contactsPage + 1;
+      return state.merge({
+        contactsPage: newContactPage,
+        contactsShowing: state.contacts.slice(0, (newContactPage * CONTACTS_PAGE_SIZE)),
+      })
+    case actionTypes.LOAD_MORE_CHAT:
+      if(state.currentChatShowing.length < (state.chatPage * CHAT_PAGE_SIZE))
+        return state;
+      const newChatPage = state.chatPage + 1;
+      return state.merge({
+        chatPage: newChatPage,
+        currentChatShowing: state.currentChat.slice(0, (newChatPage * CHAT_PAGE_SIZE))
+      })
     default:
       return state;
   };

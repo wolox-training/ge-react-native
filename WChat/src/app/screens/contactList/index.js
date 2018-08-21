@@ -8,6 +8,7 @@ import {
 import { connect } from 'react-redux';
 import styles from './styles'
 import FilterAddBar from '../../components/FilterAddBar';
+import userActions from '../../redux/user/actions';
 
 const createContact = (navigation, userId) => ({item}) => 
   item.id !== userId &&
@@ -19,21 +20,31 @@ const createContact = (navigation, userId) => ({item}) =>
 
 const contactListKeyExtractor = (item) => item.id;
 
-const ContactList = ({contacts, navigation, user}) => (
+const ContactList = ({contacts, navigation, user, loadMore}) => (
   <View style={styles.container}>
     <FilterAddBar handleAdd={() => {navigation.navigate('AddNew', {isGroup: false})}}/>
     <FlatList
       data={contacts}
       renderItem={createContact(navigation, user.id)}
       keyExtractor={contactListKeyExtractor}
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.5}
     />
   </View>
 )
 
 const mapStateToProps = (store) => ({
   user: store.user.user,
-  contacts: store.user.contacts
+  contacts: store.user.contactsShowing
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  loadMore: (userId) => {
+    dispatch(userActions.loadMoreContacts(userId));
+  },
 })
 
 
-export default connect(mapStateToProps)(ContactList);
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

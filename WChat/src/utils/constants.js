@@ -5,3 +5,6 @@ export const USERS_PATH = 'users';
 export const USER_PATH = 'user';
 export const GROUPS_PATH = 'groups';
 export const DEFAULT_USER = 'woloxer';
+export const GROUPS_PAGE_SIZE = 10;
+export const CONTACTS_PAGE_SIZE = 10;
+export const CHAT_PAGE_SIZE = 50;

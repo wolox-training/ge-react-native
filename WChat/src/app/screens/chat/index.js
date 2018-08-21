@@ -18,21 +18,23 @@ import backgroundImage from '../../../../assets/chatBackground.jpg';
 
 class Chat extends Component {
   navParams = this.props.navigation.state.params;
-  state = {isGroup: false, text: '', receiverId: null};
+  state = {
+    isGroup: false, 
+    text: '', 
+    receiverId: null
+  };
 
   componentWillMount(){
     if(this.navParams.contact) {
       this.updateChats = () => (this.props.getChats(this.props.user.id, this.navParams.contact.id));
       const contactId = this.navParams.contact.id;
       this.setState({
-        chats: this.props.contacts.find((item) => item.id === contactId).chats,
         receiverId: contactId
       });
     } else if (this.navParams.group) {
       this.updateChats = () => (this.props.getGroupChats(this.navParams.group.id));
       const groupId = this.navParams.group.id;
       this.setState({
-        chats: this.props.groups.find((item) => item.id === groupId).chats,
         isGroup: true,
         receiverId: groupId
       });
@@ -40,7 +42,7 @@ class Chat extends Component {
     this.updateChats(); 
     this.poll = setInterval(this.updateChats, 5000)
   }
-  
+
   componentWillUnmount(){
     clearInterval(this.poll);
   }
@@ -59,6 +61,14 @@ class Chat extends Component {
 
     this.setState({text: ''})
   }
+
+  handleLoadMore = () => {
+    if(this.state.isGroup)
+      this.props.loadMoreGroupChat()
+    else
+      this.props.loadMorePrivateChat()
+  }
+
   render(){
     const userId = this.props.user.id;
     const currentChat = (this.state.isGroup? this.props.currentGroupChat : this.props.currentChat);
@@ -68,7 +78,7 @@ class Chat extends Component {
           style={styles.backImage}
           source={backgroundImage}
          >
-          <ChatsList userId={userId} isGroup={this.state.isGroup} contacts={this.props.contacts} chats={currentChat} />
+          <ChatsList userId={userId} isGroup={this.state.isGroup} contacts={this.props.contacts} chats={currentChat} handleLoadMore={this.handleLoadMore} />
           <View style={styles.inputContainer}>
             <TextInput style={styles.textInput} value={this.state.text} onChangeText={this.handleTextChange}/>
             <TouchableOpacity style={styles.sendButton}
@@ -85,8 +95,8 @@ const mapStateToProps = (store) => ({
   user: store.user.user,
   contacts: store.user.contacts,
   groups: store.group.groups,
-  currentChat: store.user.currentChat,
-  currentGroupChat: store.group.currentGroupChat
+  currentChat: store.user.currentChatShowing,
+  currentGroupChat: store.group.currentGroupChatShowing
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -101,6 +111,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   sendGroupMessage: (body, userId, groupId) => {
     dispatch(groupActions.sendGroupMessage(body, userId, groupId))
+  },
+  loadMorePrivateChat: () => {
+    dispatch(userActions.loadMoreChat());
+  },
+  loadMoreGroupChat: () => {
+    dispatch(groupActions.loadMoreChat());
   }
 })
 

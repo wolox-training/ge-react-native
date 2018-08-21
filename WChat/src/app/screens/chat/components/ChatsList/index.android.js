@@ -33,9 +33,10 @@ const reduceChats = (accum, current) => {
     }
 const chatKeyExtractor = (item) => item.id;
 
-const ChatsList = ({userId, isGroup, contacts, chats}) => {
+const ChatsList = ({userId, isGroup, contacts, chats, handleLoadMore}) => {
 
   let compressedChats = chats.reduce(reduceChats, []);
+
 
   return <FlatList
     inverted
@@ -43,6 +44,8 @@ const ChatsList = ({userId, isGroup, contacts, chats}) => {
     data={compressedChats}
     renderItem={renderChat(userId, isGroup, contacts)}
     keyExtractor={chatKeyExtractor} 
+    onEndReached={handleLoadMore}
+    onEndReachedThreshold={.5}
     />
 }
 

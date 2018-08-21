@@ -68,6 +68,16 @@ const userActions = {
       type: actionTypes.USER_CREATE_FAILED,
       error
     }
+  },
+  loadMoreContacts(){
+    return {
+      type: actionTypes.LOAD_MORE_CONTACTS
+    }
+  },
+  loadMoreChat(){
+    return {
+      type: actionTypes.LOAD_MORE_CHAT
+    }
   }
 }
 
@@ -151,6 +161,12 @@ const actionCreators = {
         dispatch(userActions.userCreateFailed());
       }
     }
+  },
+  loadMoreContacts(userId){
+    return userActions.loadMoreContacts();
+  },
+  loadMoreChat(){
+    return userActions.loadMoreChat();
   }
 }
 
