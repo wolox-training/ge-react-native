@@ -6,6 +6,7 @@ import ContactList from '../../screens/contactList';
 import Chats from '../../screens/chats';
 import Groups from '../../screens/groups';
 import Chat from '../../screens/chat';
+import AddNew from '../../screens/addNew';
 import Header from './components/Header';
 
 const HomeTabs = TabNavigator({
@@ -67,6 +68,13 @@ const RootStack = StackNavigator({
             <Header goBack={ () => navigation.goBack() } title={navigation.state.params.group.name} />
       })
   },
+  AddNew: {
+    screen: AddNew,
+    navigationOptions: ({navigation}) => (
+      {
+        headerTitle: `Agregar nuevo ${navigation.state.params.isGroup? 'grupo' : 'contacto'}`
+      })
+  }
 })
 
 export default RootStack;

@@ -73,6 +73,11 @@ const user = (state = Immutable(initialState), action) => {
           ),
         currentChat: newChats.reverse()
       })
+    case actionTypes.USER_CREATED:
+      const contactsWithNewUser = state.contacts.slice().concat(action.user);
+      return state.merge({
+        contacts: contactsWithNewUser
+      });
     default:
       return state;
   };

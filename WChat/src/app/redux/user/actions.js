@@ -56,6 +56,18 @@ const userActions = {
       message,
       receiverId
     }
+  },
+  userCreated(user){
+    return {
+      type: actionTypes.USER_CREATED,
+      user
+    }
+  },
+  userCreateFailed(error){
+    return {
+      type: actionTypes.USER_CREATE_FAILED,
+      error
+    }
   }
 }
 
@@ -123,6 +135,20 @@ const actionCreators = {
         }
       } catch (e) {
         dispatch(userActions.sendMessageFailure(e.message));
+      }
+    }
+  },
+  createUser(username){
+    return async dispatch => {
+      try {
+        const response = await ChatService.createNewContact(username);
+        if(response.status === 201 || response.status === 200) {
+          dispatch(userActions.userCreated(response.data));
+        } else {
+          dispatch(userActions.userCreateFailed());
+        }
+      } catch (e) {
+        dispatch(userActions.userCreateFailed());
       }
     }
   }

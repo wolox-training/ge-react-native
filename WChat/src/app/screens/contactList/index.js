@@ -21,7 +21,7 @@ const contactListKeyExtractor = (item) => item.id;
 
 const ContactList = ({contacts, navigation, user}) => (
   <View style={styles.container}>
-    <FilterAddBar/>
+    <FilterAddBar handleAdd={() => {navigation.navigate('AddNew', {isGroup: false})}}/>
     <FlatList
       data={contacts}
       renderItem={createContact(navigation, user.id)}
@@ -34,5 +34,6 @@ const mapStateToProps = (store) => ({
   user: store.user.user,
   contacts: store.user.contacts
 })
+
 
 export default connect(mapStateToProps)(ContactList);
